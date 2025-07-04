@@ -1,10 +1,10 @@
-# AI Automation Web Developer Portfolio
+# CodeCatalyst AI - Premium AI Automation Solutions
 
-A professional, fully responsive website showcasing AI automation services and web development expertise.
+A premium, fully responsive website showcasing cutting-edge AI automation services and web development expertise.
 
 ## 🌟 Features
 
-### Professional Design
+### Premium Design
 - Modern, clean UI with professional color scheme
 - Fully responsive design for all devices
 - Smooth animations and transitions
