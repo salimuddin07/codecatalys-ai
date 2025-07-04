@@ -38,51 +38,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Typing Animation Effect
-    const typingText = document.getElementById('typing-text');
-    const texts = [
-        'AI Automation Web Development',
-        'Web Developer Specialized in AI Workflows',
-        'Building Intelligent Solutions',
-        'Automating Your Business Processes'
-    ];
-    
-    let textIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    let isPaused = false;
-
-    function typeText() {
-        const currentText = texts[textIndex];
+    // Enhanced Title Animation
+    const mainTitle = document.querySelector('.main-title');
+    if (mainTitle) {
+        // Add a subtle fade-in animation
+        mainTitle.style.opacity = '0';
+        mainTitle.style.transform = 'translateY(20px)';
         
-        if (!isDeleting && charIndex < currentText.length) {
-            // Typing
-            typingText.textContent = currentText.substring(0, charIndex + 1);
-            charIndex++;
-            setTimeout(typeText, 100);
-        } else if (isDeleting && charIndex > 0) {
-            // Deleting
-            typingText.textContent = currentText.substring(0, charIndex - 1);
-            charIndex--;
-            setTimeout(typeText, 50);
-        } else if (!isDeleting && charIndex === currentText.length) {
-            // Pause before deleting
-            isPaused = true;
-            setTimeout(() => {
-                isPaused = false;
-                isDeleting = true;
-                typeText();
-            }, 2000);
-        } else if (isDeleting && charIndex === 0) {
-            // Move to next text
-            isDeleting = false;
-            textIndex = (textIndex + 1) % texts.length;
-            setTimeout(typeText, 500);
-        }
+        setTimeout(() => {
+            mainTitle.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            mainTitle.style.opacity = '1';
+            mainTitle.style.transform = 'translateY(0)';
+        }, 500);
     }
-
-    // Start typing animation
-    typeText();
 
     // Navbar Background on Scroll
     const navbar = document.querySelector('.navbar');
