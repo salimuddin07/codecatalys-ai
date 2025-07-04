@@ -227,11 +227,18 @@ body {
     font-weight: 500;
     box-shadow: var(--shadow);
     transition: var(--transition);
+    text-decoration: none;
+    color: var(--text-dark);
+    display: inline-block;
+    cursor: pointer;
 }
 
 .tech-item:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-hover);
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
 }
 
 .redeem-code {
@@ -566,10 +573,16 @@ body {
     margin-bottom: 1rem;
     box-shadow: var(--shadow);
     transition: var(--transition);
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
 }
 
 .contact-method:hover {
     transform: translateX(10px);
+    box-shadow: var(--shadow-hover);
+    text-decoration: none;
+    color: inherit;
 }
 
 .contact-method i {
@@ -618,6 +631,10 @@ body {
 
 .social-link.telegram {
     background: #0088CC;
+}
+
+.social-link.github {
+    background: #333333;
 }
 
 .social-link.email {
@@ -678,6 +695,51 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 2rem;
+}
+
+.footer-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-social {
+    display: flex;
+    justify-content: center;
+}
+
+.footer-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    transition: var(--transition);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    color: white;
+    text-decoration: none;
+}
+
+.footer-link i {
+    font-size: 1.2rem;
+}
+
+.footer-left, .footer-right {
+    flex: 1;
+}
+
+.footer-right {
+    text-align: right;
 }
 
 /* Animations */
