@@ -490,12 +490,16 @@ body {
     background: var(--bg-light);
     border-radius: 10px;
     transition: var(--transition);
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
 }
 
 .skill-item:hover {
     background: var(--primary-color);
     color: white;
     transform: translateX(10px);
+    text-decoration: none;
 }
 
 .skill-item i {
