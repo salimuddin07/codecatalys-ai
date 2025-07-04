@@ -86,11 +86,22 @@ body {
 }
 
 .nav-logo .logo-text {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Orbitron', 'Space Grotesk', sans-serif;
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--primary-color);
-    letter-spacing: -0.5px;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: uppercase;
+    transition: var(--transition);
+}
+
+.nav-logo .logo-text:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 2px 4px rgba(167, 164, 89, 0.3));
 }
 
 .nav-menu {
