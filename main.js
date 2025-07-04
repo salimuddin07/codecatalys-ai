@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', function() {
         cursor: pointer;
         z-index: 1000;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 15px rgba(132, 48, 48, 0.2);
     `;
 
     document.body.appendChild(darkModeToggle);
