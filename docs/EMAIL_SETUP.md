@@ -1,10 +1,30 @@
 # Email Configuration Setup Guide
 
-## EmailJS Setup Instructions
+## Quick Setup Instructions
 
-To make the contact form work with your email (salim@theautomagichub.com), follow these steps:
+Your project now has a modern, organized structure with proper EmailJS integration. Here's how to configure it:
 
-### Step 1: Create EmailJS Account
+### File Structure
+```
+📁 project/
+├── index.html                    # Main HTML file
+├── README.md                     # Project documentation
+├── 📁 assets/                    # Additional assets (empty for now)
+├── 📁 css/
+│   └── style.css                 # Main stylesheet
+├── 📁 docs/
+│   └── EMAIL_SETUP.md           # This file
+├── 📁 images/
+│   ├── profile-photo.jpg        # Your professional photo
+│   └── animated-logo.svg        # Logo animation
+└── 📁 js/
+    ├── config.js                # EmailJS configuration
+    ├── email-service.js         # Email service handler
+    ├── script.js                # Main JavaScript file
+    └── contact-form-backup.js   # Backup email solution
+```
+
+### Step 1: Configure EmailJS
 1. Go to https://www.emailjs.com/
 2. Sign up with your email
 3. Verify your email address
@@ -13,7 +33,7 @@ To make the contact form work with your email (salim@theautomagichub.com), follo
 1. Go to "Email Services" in your EmailJS dashboard
 2. Click "Add New Service"
 3. Choose "Gmail" (recommended)
-4. Connect your Gmail account or use SMTP
+4. Connect your Gmail account
 5. Note down the Service ID (e.g., "service_abc123")
 
 ### Step 3: Create Email Template
@@ -22,9 +42,9 @@ To make the contact form work with your email (salim@theautomagichub.com), follo
 3. Use this template:
 
 ```
-Subject: New Contact Form Submission - {{service_type}}
+Subject: New Contact Form - {{service_type}}
 
-Hello,
+Hello Salim,
 
 You have received a new contact form submission:
 
@@ -36,7 +56,7 @@ Message:
 {{message}}
 
 ---
-Reply directly to: {{reply_to}}
+Reply to: {{from_email}}
 ```
 
 4. Note down the Template ID (e.g., "template_xyz789")
@@ -45,16 +65,16 @@ Reply directly to: {{reply_to}}
 1. Go to "Account" → "General"
 2. Copy your Public Key (e.g., "user_abc123xyz")
 
-### Step 5: Update JavaScript
-Replace the placeholders in main.js:
+### Step 5: Update Configuration
+Edit `js/config.js` and replace the placeholder values:
 
 ```javascript
-// Line 8: Replace with your Public Key
-emailjs.init("YOUR_ACTUAL_PUBLIC_KEY");
-
-// Line 24-25: Replace with your IDs
-'service_gmail', // Replace with your Service ID
-'template_contact', // Replace with your Template ID
+const EMAIL_CONFIG = {
+    PUBLIC_KEY: 'your_actual_public_key_here',
+    SERVICE_ID: 'your_service_id_here',
+    TEMPLATE_ID: 'your_template_id_here',
+    // ... rest of config
+};
 ```
 
 ### Step 6: Test

@@ -1,11 +1,6 @@
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Initialize secure email service
-    // Email configuration is kept secure on the server side
-    const EMAIL_SERVICE_URL = 'https://formsubmit.co/';
-    const ENCODED_EMAIL = 'c2FsaW1AdGhlYXV0b21hZ2ljaHViLmNvbQ=='; // Base64 encoded email
-    
     // Navigation Toggle for Mobile
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
@@ -141,81 +136,72 @@ document.addEventListener('DOMContentLoaded', function() {
         statsObserver.observe(stat);
     });
 
-    // Secure Email Sending Function
-    function sendSecureEmail(formData) {
-        // Decode the email address
-        const emailAddress = atob(ENCODED_EMAIL);
-        
-        // Create form data for submission
-        const submitData = new FormData();
-        submitData.append('name', formData.get('name'));
-        submitData.append('email', formData.get('email'));
-        submitData.append('service', formData.get('service'));
-        submitData.append('message', formData.get('message'));
-        submitData.append('_subject', `New Contact Form: ${formData.get('service')}`);
-        submitData.append('_captcha', 'false'); // Disable captcha for better UX
-        submitData.append('_template', 'table'); // Use table template for better formatting
-        
-        // Send to FormSubmit service
-        return fetch(`${EMAIL_SERVICE_URL}${emailAddress}`, {
-            method: 'POST',
-            body: submitData
-        });
-    }
-
-    // Contact Form Handling
+    // Contact Form Handling with EmailJS
     const contactForm = document.getElementById('contact-form');
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(contactForm);
-        const name = formData.get('name');
-        const email = formData.get('email');
-        const service = formData.get('service');
-        const message = formData.get('message');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(contactForm);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const service = formData.get('service');
+            const message = formData.get('message');
 
-        // Simple validation
-        if (!name || !email || !service || !message) {
-            showNotification('Please fill in all fields.', 'error');
-            return;
-        }
+            // Simple validation
+            if (!name || !email || !service || !message) {
+                showNotification('Please fill in all fields.', 'error');
+                return;
+            }
 
-        if (!isValidEmail(email)) {
-            showNotification('Please enter a valid email address.', 'error');
-            return;
-        }
+            if (!isValidEmail(email)) {
+                showNotification('Please enter a valid email address.', 'error');
+                return;
+            }
 
-        // Show loading state
-        const submitButton = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitButton.textContent;
-        submitButton.textContent = 'Sending...';
-        submitButton.disabled = true;
+            // Show loading state
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
 
-        // Send email securely
-        sendSecureEmail(formData)
-            .then((response) => {
-                if (response.ok) {
-                    showNotification('Thank you! Your message has been sent successfully. I\'ll get back to you soon!', 'success');
-                    contactForm.reset();
+            try {
+                // Try EmailJS first if configured
+                if (typeof emailService !== 'undefined' && emailService.isConfigured()) {
+                    const result = await emailService.sendEmail(formData);
+                    if (result.success) {
+                        showNotification('Thank you! Your message has been sent successfully. I\'ll get back to you soon!', 'success');
+                        contactForm.reset();
+                    } else {
+                        throw new Error(result.message);
+                    }
                 } else {
-                    throw new Error('Network response was not ok');
+                    // Fallback to mailto if EmailJS not configured
+                    if (typeof emailService !== 'undefined') {
+                        emailService.openMailtoFallback(formData);
+                    } else {
+                        // Direct mailto fallback
+                        const subject = encodeURIComponent(`Contact Form: ${service}`);
+                        const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nService: ${service}\n\nMessage:\n${message}`);
+                        window.open(`mailto:${EMAIL_CONFIG.RECIPIENT_EMAIL}?subject=${subject}&body=${body}`);
+                    }
+                    showNotification('Opening your email client. Please send the pre-filled message.', 'info');
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 console.error('Email sending failed:', error);
                 // Fallback: Open email client
                 const subject = encodeURIComponent(`Contact Form: ${service}`);
                 const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nService: ${service}\n\nMessage:\n${message}`);
-                const emailAddress = atob(ENCODED_EMAIL);
-                window.open(`mailto:${emailAddress}?subject=${subject}&body=${body}`);
-                showNotification('Opening your email client as backup. Please send the pre-filled message.', 'error');
-            })
-            .finally(() => {
+                const recipient = typeof EMAIL_CONFIG !== 'undefined' ? EMAIL_CONFIG.RECIPIENT_EMAIL : 'salim@theautomagichub.com';
+                window.open(`mailto:${recipient}?subject=${subject}&body=${body}`);
+                showNotification('There was an issue sending your message. Opening your email client as backup.', 'error');
+            } finally {
                 submitButton.textContent = originalText;
                 submitButton.disabled = false;
-            });
-    });
+            }
+        });
+    }
 
     // Email validation helper
     function isValidEmail(email) {
@@ -234,13 +220,24 @@ document.addEventListener('DOMContentLoaded', function() {
         // Create notification element
         const notification = document.createElement('div');
         notification.className = `notification notification-${type}`;
+        
+        // Set icon based on type
+        let icon = '⚠';
+        if (type === 'success') icon = '✓';
+        else if (type === 'info') icon = 'ℹ';
+        
         notification.innerHTML = `
             <div class="notification-content">
-                <span class="notification-icon">${type === 'success' ? '✓' : '⚠'}</span>
+                <span class="notification-icon">${icon}</span>
                 <span class="notification-message">${message}</span>
                 <button class="notification-close">&times;</button>
             </div>
         `;
+
+        // Set background color based on type
+        let backgroundColor = '#EF4444'; // default error red
+        if (type === 'success') backgroundColor = '#10B981'; // green
+        else if (type === 'info') backgroundColor = '#3B82F6'; // blue
 
         // Add styles
         notification.style.cssText = `
@@ -248,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function() {
             top: 20px;
             right: 20px;
             z-index: 10000;
-            background: ${type === 'success' ? '#10B981' : '#EF4444'};
+            background: ${backgroundColor};
             color: white;
             padding: 1rem 1.5rem;
             border-radius: 10px;
