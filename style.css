@@ -746,14 +746,23 @@ body {
         transform: translateY(-8px) rotate(-45deg);
     }
 
+    .hero {
+        padding-top: 120px;
+        min-height: 100vh;
+    }
+
     .hero-content {
         grid-template-columns: 1fr;
         gap: 2rem;
         text-align: center;
+        min-height: 70vh;
     }
 
     .hero-visual {
         order: -1;
+        margin-top: 2rem;
+        position: relative;
+        height: 350px;
     }
 
     .typing-text {
@@ -813,12 +822,17 @@ body {
     }
 
     .floating-animation {
-        top: -30px;
-        right: -30px;
+        top: 20px;
+        right: 10px;
     }
 }
 
 @media (max-width: 480px) {
+    .hero {
+        padding-top: 100px;
+        min-height: 100vh;
+    }
+
     .container {
         padding: 0 15px;
     }
@@ -859,6 +873,16 @@ body {
     .profile-pic {
         width: 200px;
         height: 280px;
+    }
+
+    .hero-visual {
+        margin-top: 1.5rem;
+        height: 300px;
+    }
+
+    .floating-animation {
+        top: 15px;
+        right: 5px;
     }
 
     .hero-gif {
