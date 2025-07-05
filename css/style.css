@@ -41,9 +41,7 @@
 }
 
 [data-theme="dark"] .navbar {
-    background: linear-gradient(135deg, rgba(167, 164, 89, 0.95), rgba(52, 152, 219, 0.95));
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(212, 212, 111, 0.2);
+    background: rgba(26, 26, 26, 0.95);
 }
 
 [data-theme="dark"] .hero {
@@ -1039,7 +1037,14 @@ body {
     }
 
     .floating-animation {
-        display: none;
+        top: 20px;
+        right: 10px;
+        position: relative;
+    }
+
+    .hero-gif {
+        width: 80px;
+        height: 80px;
     }
 
     .dark-mode-text {
@@ -1106,7 +1111,14 @@ body {
     }
 
     .floating-animation {
-        display: none;
+        top: 10px;
+        right: 0px;
+        position: relative;
+    }
+
+    .hero-gif {
+        width: 60px;
+        height: 60px;
     }
 }
 
@@ -1216,9 +1228,3 @@ a:focus {
 [data-theme="dark"] .nav-link:hover {
     color: #000000 !important;
 }
-
-[data-theme="dark"] .nav-menu {
-        background: linear-gradient(135deg, rgba(167, 164, 89, 0.95), rgba(52, 152, 219, 0.95));
-        backdrop-filter: blur(15px);
-        border: 1px solid rgba(212, 212, 111, 0.2);
-    }
