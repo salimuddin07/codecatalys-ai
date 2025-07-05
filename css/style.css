@@ -187,10 +187,14 @@ body {
 
 .nav-link {
     text-decoration: none;
-    color: var(--text-dark);
+    color: #000000;
     font-weight: 500;
     transition: var(--transition);
     position: relative;
+}
+
+.nav-link:hover {
+    color: #000000;
 }
 
 .nav-link::after {
@@ -337,15 +341,16 @@ body {
 
 .cta-buttons {
     display: flex;
-    gap: 1rem;
+    gap: 0.8rem;
     flex-wrap: wrap;
 }
 
 .btn {
-    padding: 1rem 2rem;
+    padding: 0.7rem 1.5rem;
     border: none;
-    border-radius: 50px;
-    font-weight: 600;
+    border-radius: 25px;
+    font-weight: 500;
+    font-size: 0.9rem;
     text-decoration: none;
     cursor: pointer;
     transition: var(--transition);
@@ -587,6 +592,12 @@ body {
     color: white;
 }
 
+/* Light mode specific hover - icons stay black */
+[data-theme="light"] .skill-item:hover i,
+:root:not([data-theme="dark"]) .skill-item:hover i {
+    color: #000000;
+}
+
 .about-stats {
     display: flex;
     flex-direction: column;
@@ -826,7 +837,7 @@ body {
 .dark-mode-text {
     font-size: 0.9rem;
     font-weight: 500;
-    color: var(--text-dark);
+    color: #000000;
     cursor: pointer;
     transition: var(--transition);
     margin-left: 1rem;
@@ -840,16 +851,19 @@ body {
     background: rgba(167, 164, 89, 0.2);
     border-color: var(--primary-color);
     transform: translateY(-2px);
+    color: #000000;
 }
 
 [data-theme="dark"] .dark-mode-text {
     background: rgba(212, 212, 111, 0.1);
     border-color: rgba(212, 212, 111, 0.2);
+    color: #000000 !important;
 }
 
 [data-theme="dark"] .dark-mode-text:hover {
     background: rgba(212, 212, 111, 0.2);
     border-color: var(--primary-color);
+    color: #000000 !important;
 }
 
 /* Animations */
@@ -1025,6 +1039,12 @@ body {
     .floating-animation {
         top: 20px;
         right: 10px;
+        position: relative;
+    }
+
+    .hero-gif {
+        width: 80px;
+        height: 80px;
     }
 
     .dark-mode-text {
@@ -1032,6 +1052,7 @@ body {
         margin-top: 1rem;
         display: inline-block;
         font-size: 0.8rem;
+        color: #000000 !important;
     }
 }
 
@@ -1090,13 +1111,14 @@ body {
     }
 
     .floating-animation {
-        top: 15px;
-        right: 5px;
+        top: 10px;
+        right: 0px;
+        position: relative;
     }
 
     .hero-gif {
-        width: 80px;
-        height: 80px;
+        width: 60px;
+        height: 60px;
     }
 }
 
@@ -1130,7 +1152,6 @@ html {
     transition: all 0.3s ease;
     border: 3px solid rgba(255, 255, 255, 0.2);
     cursor: pointer;
-    position: relative;
 }
 
 .whatsapp-btn:hover {
@@ -1198,4 +1219,12 @@ a:focus {
     .section {
         break-inside: avoid;
     }
+}
+
+[data-theme="dark"] .nav-link {
+    color: #000000 !important;
+}
+
+[data-theme="dark"] .nav-link:hover {
+    color: #000000 !important;
 }

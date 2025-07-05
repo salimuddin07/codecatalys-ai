@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } catch (error) {
             console.error('Error:', error);
-            showNotification('Sorry, there was an error sending your message. Please try again or contact me directly at salim@theautomagichub.com', 'error');
+            showNotification('Sorry, there was an error sending your message. Please try again or contact me directly at salimuddinsaiyed5@gmail.com', 'error');
         } finally {
             submitButton.textContent = originalText;
             submitButton.disabled = false;

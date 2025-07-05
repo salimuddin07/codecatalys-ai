@@ -127,7 +127,7 @@ A premium, fully responsive website showcasing cutting-edge AI automation servic
 
 ## 📝 Contact Information
 
-**Email**: salim@theautomagichub.com  
+**Email**: salimuddinsaiyed5@gmail.com  
 **LinkedIn**: [AI Automation Profile](https://www.linkedin.com/in/ai-automation-275ab6359/)  
 **Telegram**: [Direct Contact](https://web.telegram.org/k/)
 

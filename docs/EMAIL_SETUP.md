@@ -79,7 +79,7 @@ const EMAIL_CONFIG = {
 
 ### Step 6: Test
 1. Fill out the contact form
-2. Check your email (salim@theautomagichub.com)
+2. Check your email (salimuddinsaiyed5@gmail.com)
 3. Check EmailJS dashboard for delivery status
 
 ### Security Features
@@ -99,7 +99,7 @@ const EMAIL_CONFIG = {
 If EmailJS seems complex, you can use Formspree:
 1. Go to https://formspree.io/
 2. Create account
-3. Create form pointing to salim@theautomagichub.com
+3. Create form pointing to salimuddinsaiyed5@gmail.com
 4. Replace the form action with Formspree endpoint
 
 ---

@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Fallback: Open email client
                 const subject = encodeURIComponent(`Contact Form: ${service}`);
                 const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nService: ${service}\n\nMessage:\n${message}`);
-                const recipient = typeof EMAIL_CONFIG !== 'undefined' ? EMAIL_CONFIG.RECIPIENT_EMAIL : 'salim@theautomagichub.com';
+                const recipient = typeof EMAIL_CONFIG !== 'undefined' ? EMAIL_CONFIG.RECIPIENT_EMAIL : 'salimuddinsaiyed5@gmail.com';
                 window.open(`mailto:${recipient}?subject=${subject}&body=${body}`);
                 showNotification('There was an issue sending your message. Opening your email client as backup.', 'error');
             } finally {
@@ -411,7 +411,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // WhatsApp Auto-Message Functionality
     const whatsappBtn = document.getElementById('whatsapp-contact');
     const whatsappNumber = '+919638603155'; // Hidden from UI
-    const autoMessage = "Hello! My name is Salimuddin, and I'm an AI automation and data scraping expert. I'm ready to help transform your business processes. Let's discuss how we can work together to streamline your operations and boost your efficiency!";
+    const autoMessage = "Hello! My business needs AI automation NOW. I'm ready to invest in solutions that will streamline my operations and boost my bottom line. Can we talk about your services?";
     
     if (whatsappBtn) {
         // Remove any default title/tooltip attributes

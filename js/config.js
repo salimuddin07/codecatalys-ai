@@ -8,8 +8,8 @@ const EMAIL_CONFIG = {
     TEMPLATE_ID: 'YOUR_TEMPLATE_ID',
     
     // Email settings
-    RECIPIENT_EMAIL: 'salim@theautomagichub.com',
-    
+    RECIPIENT_EMAIL: 'salimuddinsaiyed5@gmail.com',
+
     // Form settings
     TIMEOUT: 10000, // 10 seconds timeout
     
