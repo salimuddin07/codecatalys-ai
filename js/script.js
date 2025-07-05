@@ -373,62 +373,76 @@ document.addEventListener('DOMContentLoaded', function() {
 
     images.forEach(img => imageObserver.observe(img));
 
-    // Dark mode toggle (bonus feature)
-    const darkModeToggle = document.createElement('button');
-    darkModeToggle.innerHTML = '🌙';
-    darkModeToggle.className = 'dark-mode-toggle';
-    darkModeToggle.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        border: none;
-        border-radius: 50%;
-        background: var(--primary-color);
-        color: white;
-        font-size: 1.5rem;
-        cursor: pointer;
-        z-index: 1000;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(132, 48, 48, 0.2);
-    `;
-
-    document.body.appendChild(darkModeToggle);
-
+    // Dark Mode Toggle
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    
+    // Check for saved dark mode preference or default to light mode
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    
+    // Update toggle text based on current theme
+    if (currentTheme === 'dark') {
+        darkModeToggle.textContent = 'Light Mode';
+    } else {
+        darkModeToggle.textContent = 'Dark Mode';
+    }
+    
+    // Handle dark mode toggle
     darkModeToggle.addEventListener('click', function() {
-        document.body.classList.toggle('dark-mode');
-        this.innerHTML = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         
-        // Save preference
-        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        // Update the theme
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        // Update toggle text
+        this.textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+        
+        // Add smooth transition effect
+        document.body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+        
+        // Remove transition after animation completes
+        setTimeout(() => {
+            document.body.style.transition = '';
+        }, 300);
     });
 
-    // Load dark mode preference
-    if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
-        darkModeToggle.innerHTML = '☀️';
+    // WhatsApp Auto-Message Functionality
+    const whatsappBtn = document.getElementById('whatsapp-contact');
+    const whatsappNumber = '+919638603155'; // Hidden from UI
+    const autoMessage = "Hello! My name is Salimuddin, and I'm an AI automation and data scraping expert. I'm ready to help transform your business processes. Let's discuss how we can work together to streamline your operations and boost your efficiency!";
+    
+    if (whatsappBtn) {
+        // Remove any default title/tooltip attributes
+        whatsappBtn.removeAttribute('title');
+        whatsappBtn.removeAttribute('data-tooltip');
+        
+        whatsappBtn.addEventListener('click', function() {
+            // Encode the message for URL
+            const encodedMessage = encodeURIComponent(autoMessage);
+            
+            // Create WhatsApp URL with pre-filled message
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            
+            // Open WhatsApp with the pre-filled message
+            window.open(whatsappURL, '_blank');
+            
+            // Show notification that message is ready to send
+            showNotification('WhatsApp opened with your message ready to send!', 'success');
+        });
+        
+        // Add hover effect without showing any sensitive information
+        whatsappBtn.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1)';
+            this.style.boxShadow = '0 6px 25px rgba(37, 211, 102, 0.6)';
+        });
+        
+        whatsappBtn.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+            this.style.boxShadow = '0 4px 20px rgba(37, 211, 102, 0.4)';
+        });
     }
-
-    // Add dark mode styles
-    const darkModeStyles = document.createElement('style');
-    darkModeStyles.textContent = `
-        .dark-mode {
-            --bg-light: #1a1a1a;
-            --white: #2d2d2d;
-            --text-dark: #e5e5e5;
-            --text-light: #b0b0b0;
-        }
-        
-        .dark-mode .navbar {
-            background: rgba(45, 45, 45, 0.95);
-        }
-        
-        .dark-mode .hero {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-        }
-    `;
-    document.head.appendChild(darkModeStyles);
 
     console.log('🚀 AI Automation Website Loaded Successfully!');
 });

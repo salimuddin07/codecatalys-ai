@@ -20,6 +20,82 @@
     --gradient: linear-gradient(135deg, var(--primary-color), var(--accent-color));
 }
 
+/* Dark mode variables */
+[data-theme="dark"] {
+    --primary-color: #D4D46F;
+    --secondary-color: #E8E8E8;
+    --accent-color: #5DADE2;
+    --text-dark: #E8E8E8;
+    --text-light: #B0B0B0;
+    --bg-light: #2C2C2C;
+    --bg-dark: #1A1A1A;
+    --white: #1A1A1A;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.4);
+    --gradient: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+}
+
+[data-theme="dark"] body {
+    background: var(--bg-dark);
+    color: var(--text-dark);
+}
+
+[data-theme="dark"] .navbar {
+    background: rgba(26, 26, 26, 0.95);
+}
+
+[data-theme="dark"] .hero {
+    background: linear-gradient(135deg, #2C2C2C 0%, #1A1A1A 100%);
+}
+
+[data-theme="dark"] .section {
+    background: var(--bg-dark);
+}
+
+[data-theme="dark"] .service-card,
+[data-theme="dark"] .contact-card {
+    background: var(--bg-light);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .service-card:hover,
+[data-theme="dark"] .contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .tech-item,
+[data-theme="dark"] .skill-item {
+    background: rgba(212, 212, 111, 0.1);
+    border: 1px solid rgba(212, 212, 111, 0.2);
+}
+
+[data-theme="dark"] .tech-item:hover,
+[data-theme="dark"] .skill-item:hover {
+    background: rgba(212, 212, 111, 0.2);
+    border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group select,
+[data-theme="dark"] .form-group textarea {
+    background: var(--bg-light);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-dark);
+}
+
+[data-theme="dark"] .form-group input:focus,
+[data-theme="dark"] .form-group select:focus,
+[data-theme="dark"] .form-group textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(212, 212, 111, 0.1);
+}
+
+[data-theme="dark"] .footer {
+    background: var(--bg-dark);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 body {
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
@@ -746,6 +822,36 @@ body {
     text-align: right;
 }
 
+/* Dark Mode Text */
+.dark-mode-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: var(--transition);
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: rgba(167, 164, 89, 0.1);
+    border: 1px solid rgba(167, 164, 89, 0.2);
+}
+
+.dark-mode-text:hover {
+    background: rgba(167, 164, 89, 0.2);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+[data-theme="dark"] .dark-mode-text {
+    background: rgba(212, 212, 111, 0.1);
+    border-color: rgba(212, 212, 111, 0.2);
+}
+
+[data-theme="dark"] .dark-mode-text:hover {
+    background: rgba(212, 212, 111, 0.2);
+    border-color: var(--primary-color);
+}
+
 /* Animations */
 @keyframes slideInLeft {
     from {
@@ -770,11 +876,14 @@ body {
 }
 
 @keyframes float {
-    0%, 100% {
+    0% {
         transform: translateY(0px);
     }
     50% {
-        transform: translateY(-20px);
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
     }
 }
 
@@ -917,6 +1026,13 @@ body {
         top: 20px;
         right: 10px;
     }
+
+    .dark-mode-text {
+        margin-left: 0;
+        margin-top: 1rem;
+        display: inline-block;
+        font-size: 0.8rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -987,6 +1103,65 @@ body {
 /* Smooth scrolling */
 html {
     scroll-behavior: smooth;
+}
+
+/* WhatsApp Float Button */
+.whatsapp-float {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+    animation: float 3s ease-in-out infinite;
+}
+
+/* WhatsApp Button - No Tooltip for Privacy */
+.whatsapp-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: white;
+    text-decoration: none;
+    font-size: 1.8rem;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+    transition: all 0.3s ease;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    position: relative;
+}
+
+.whatsapp-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+    color: white;
+    text-decoration: none;
+}
+
+.whatsapp-btn:active {
+    transform: scale(0.95);
+}
+
+/* Remove any tooltips or hover text */
+.whatsapp-btn::after,
+.whatsapp-btn::before {
+    display: none !important;
+}
+
+/* Pulsing animation for WhatsApp button */
+.whatsapp-btn::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 50%;
+    border: 2px solid rgba(37, 211, 102, 0.3);
+    animation: pulse 2s infinite;
+    display: block !important;
 }
 
 /* Loading animation for images */
