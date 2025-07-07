@@ -857,13 +857,13 @@ body {
 [data-theme="dark"] .dark-mode-text {
     background: rgba(212, 212, 111, 0.1);
     border-color: rgba(212, 212, 111, 0.2);
-    color: #000000 !important;
+    color: #FFFFFF !important;
 }
 
 [data-theme="dark"] .dark-mode-text:hover {
     background: rgba(212, 212, 111, 0.2);
     border-color: var(--primary-color);
-    color: #000000 !important;
+    color: #FFFFFF !important;
 }
 
 /* Animations */
@@ -1222,9 +1222,9 @@ a:focus {
 }
 
 [data-theme="dark"] .nav-link {
-    color: #000000 !important;
+    color: #FFFFFF !important;
 }
 
 [data-theme="dark"] .nav-link:hover {
-    color: #000000 !important;
+    color: #FFFFFF !important;
 }
