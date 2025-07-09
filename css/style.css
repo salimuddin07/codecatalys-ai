@@ -721,6 +721,18 @@ body {
     background: #0077B5;
 }
 
+.social-link.instagram {
+    background: linear-gradient(45deg, #E4405F, #F77737, #FCAF45);
+}
+
+.social-link.facebook {
+    background: #1877F2;
+}
+
+.social-link.twitter {
+    background: #000000;
+}
+
 .social-link.telegram {
     background: #0088CC;
 }
@@ -788,17 +800,6 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: 2rem;
-}
-
-.footer-center {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-}
-
-.footer-social {
-    display: flex;
-    justify-content: center;
 }
 
 .footer-link {
