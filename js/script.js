@@ -55,11 +55,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // Navbar Background on Scroll
     const navbar = document.querySelector('.navbar');
     window.addEventListener('scroll', function() {
+        const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+        
         if (window.scrollY > 100) {
-            navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            if (isDarkMode) {
+                navbar.style.background = 'linear-gradient(135deg, rgba(212, 212, 111, 0.98), rgba(93, 173, 226, 0.98))';
+            } else {
+                navbar.style.background = 'linear-gradient(135deg, rgba(167, 164, 89, 0.98), rgba(52, 152, 219, 0.98))';
+            }
             navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
         } else {
-            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            if (isDarkMode) {
+                navbar.style.background = 'linear-gradient(135deg, rgba(212, 212, 111, 0.95), rgba(93, 173, 226, 0.95))';
+            } else {
+                navbar.style.background = 'linear-gradient(135deg, rgba(167, 164, 89, 0.95), rgba(52, 152, 219, 0.95))';
+            }
             navbar.style.boxShadow = 'none';
         }
     });
