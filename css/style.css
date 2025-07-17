@@ -62,6 +62,12 @@ body {
     border-bottom: 1px solid rgba(212, 212, 111, 0.2);
 }
 
+[data-theme="dark"] .nav-menu {
+    background: linear-gradient(135deg, rgba(212, 212, 111, 0.95), rgba(93, 173, 226, 0.95)) !important;
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(212, 212, 111, 0.2);
+}
+
 [data-theme="dark"] .hero {
     background: linear-gradient(135deg, #2C2C2C 0%, #1A1A1A 100%);
 }
@@ -999,9 +1005,12 @@ select {
         width: 100%;
         text-align: center;
         transition: 0.3s;
+        background: linear-gradient(135deg, rgba(167, 164, 89, 0.95), rgba(52, 152, 219, 0.95));
+        backdrop-filter: blur(15px);
         box-shadow: var(--shadow);
         padding: 1.5rem 0;
         z-index: 999;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .nav-menu.active {
@@ -1258,6 +1267,9 @@ select {
     .nav-menu {
         top: 55px;
         padding: 1rem 0;
+        background: linear-gradient(135deg, rgba(167, 164, 89, 0.95), rgba(52, 152, 219, 0.95));
+        backdrop-filter: blur(15px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .nav-link {
