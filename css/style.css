@@ -5,6 +5,22 @@
     box-sizing: border-box;
 }
 
+/* Mobile-first approach - better touch targets and scrolling */
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
 :root {
     --primary-color: #A7A459;
     --secondary-color: #2C3E50;
@@ -103,12 +119,42 @@ body {
     line-height: 1.6;
     color: var(--text-dark);
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    width: 100%;
+}
+
+/* Improved touch targets for mobile */
+button, a, input, select, textarea {
+    min-height: 44px;
+    touch-action: manipulation;
+}
+
+/* Prevent zoom on form inputs in iOS */
+input[type="email"],
+input[type="tel"],
+input[type="text"],
+textarea,
+select {
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    input[type="email"],
+    input[type="tel"], 
+    input[type="text"],
+    textarea,
+    select {
+        font-size: 16px !important;
+    }
 }
 
 /* Navigation */
@@ -919,27 +965,43 @@ body {
 }
 
 /* Responsive Design */
+/* Enhanced Mobile First Approach */
 @media (max-width: 768px) {
+    /* Container adjustments */
+    .container {
+        padding: 0 1rem;
+        max-width: 100%;
+    }
+
+    /* Navbar improvements */
+    .navbar {
+        padding: 0.5rem 0;
+    }
+
+    .nav-container {
+        padding: 0 1rem;
+    }
+
     .nav-logo .logo-img {
         width: 35px;
         height: 35px;
     }
 
     .nav-logo .logo-text {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .nav-menu {
         position: fixed;
         left: -100%;
-        top: 70px;
+        top: 65px;
         flex-direction: column;
-        background-color: var(--white);
         width: 100%;
         text-align: center;
         transition: 0.3s;
         box-shadow: var(--shadow);
-        padding: 2rem 0;
+        padding: 1.5rem 0;
+        z-index: 999;
     }
 
     .nav-menu.active {
@@ -962,40 +1024,101 @@ body {
         transform: translateY(-8px) rotate(-45deg);
     }
 
+    /* Hero section improvements */
     .hero {
-        padding-top: 120px;
+        padding-top: 80px;
         min-height: 100vh;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .hero-container {
+        padding: 0 1rem;
     }
 
     .hero-content {
         grid-template-columns: 1fr;
         gap: 2rem;
         text-align: center;
-        min-height: 70vh;
+        min-height: 80vh;
+        padding: 1rem 0;
     }
 
     .hero-visual {
         order: -1;
-        margin-top: 2rem;
+        margin-top: 1rem;
         position: relative;
-        height: 350px;
+        height: 280px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .main-title {
-        font-size: 2.5rem;
-        line-height: 1.2;
+        font-size: 2.2rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
     }
 
     .subtitle {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .lead-text {
+        font-size: 1.1rem;
+    }
+
+    .tech-stack {
+        justify-content: center;
+        gap: 0.8rem;
+        margin: 1rem 0;
+    }
+
+    .tech-item {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
     }
 
     .cta-buttons {
         justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+        min-width: 140px;
+    }
+
+    /* Services section */
+    .services {
+        padding: 3rem 0;
     }
 
     .services-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .service-card {
+        padding: 2rem 1.5rem;
+        margin: 0 1rem;
+    }
+
+    .section-header {
+        margin-bottom: 2.5rem;
+        padding: 0 1rem;
+    }
+
+    .section-header h2 {
+        font-size: 2.2rem;
+    }
+
+    /* About section */
+    .about {
+        padding: 3rem 0;
     }
 
     .about-content {
@@ -1003,54 +1126,85 @@ body {
         gap: 2rem;
     }
 
-    .contact-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
     .skills-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
     .about-stats {
         flex-direction: row;
         flex-wrap: wrap;
+        gap: 1rem;
     }
 
     .stat-item {
         flex: 1;
-        min-width: 150px;
+        min-width: 140px;
+        padding: 1.5rem;
     }
 
+    /* Contact section */
+    .contact {
+        padding: 3rem 0;
+    }
+
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .contact-info {
+        order: 1;
+    }
+
+    .contact-form {
+        order: 2;
+        margin: 0 1rem;
+    }
+
+    .contact-methods {
+        margin-bottom: 1.5rem;
+    }
+
+    .contact-method {
+        padding: 1rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .social-links {
+        gap: 0.8rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .social-link {
+        width: 45px;
+        height: 45px;
+    }
+
+    /* Footer */
     .footer-content {
         flex-direction: column;
         gap: 1rem;
         text-align: center;
-    }
-
-    .tech-stack {
-        justify-content: center;
+        padding: 0 1rem;
     }
 
     .profile-pic {
-        width: 250px;
-        height: 320px;
-    }
-
-    .hero-gif {
-        width: 100px;
-        height: 100px;
-    }
-
-    .floating-animation {
-        top: 20px;
-        right: 10px;
-        position: relative;
+        width: 220px;
+        height: 280px;
+        border-radius: 15px;
     }
 
     .hero-gif {
         width: 80px;
         height: 80px;
+    }
+
+    .floating-animation {
+        top: 15px;
+        right: 5px;
+        position: relative;
     }
 
     .dark-mode-text {
@@ -1059,72 +1213,505 @@ body {
         display: inline-block;
         font-size: 0.8rem;
         color: #000000 !important;
+        padding: 0.4rem 0.8rem;
+    }
+
+    /* WhatsApp button mobile adjustment */
+    .whatsapp-float {
+        right: 15px;
+        bottom: 15px;
+    }
+
+    .whatsapp-btn {
+        width: 55px;
+        height: 55px;
+        font-size: 1.6rem;
     }
 }
 
+/* Extra Small Mobile Devices (320px - 480px) */
 @media (max-width: 480px) {
-    .hero {
-        padding-top: 100px;
-        min-height: 100vh;
+    /* Base container and spacing */
+    .container {
+        padding: 0 0.8rem;
     }
 
-    .container {
-        padding: 0 15px;
+    /* Navbar ultra-compact */
+    .navbar {
+        padding: 0.4rem 0;
+    }
+
+    .nav-container {
+        padding: 0 0.8rem;
     }
 
     .nav-logo .logo-img {
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 28px;
     }
 
     .nav-logo .logo-text {
-        font-size: 1rem;
+        font-size: 0.9rem;
+        letter-spacing: 0.2px;
+    }
+
+    .nav-menu {
+        top: 55px;
+        padding: 1rem 0;
+    }
+
+    .nav-link {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    /* Hero section ultra-mobile */
+    .hero {
+        padding-top: 70px;
+        min-height: 100vh;
+        padding-left: 0.8rem;
+        padding-right: 0.8rem;
+    }
+
+    .hero-container {
+        padding: 0 0.5rem;
+    }
+
+    .hero-content {
+        gap: 1.5rem;
+        padding: 0.5rem 0;
+    }
+
+    .hero-visual {
+        height: 240px;
+        margin-top: 0.5rem;
     }
 
     .main-title {
-        font-size: 2rem;
-        line-height: 1.2;
+        font-size: 1.8rem;
+        line-height: 1.3;
+        margin-bottom: 0.8rem;
     }
 
     .subtitle {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .lead-text {
+        font-size: 1rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .hero-description p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .tech-stack {
+        gap: 0.5rem;
+        margin: 0.8rem 0;
+    }
+
+    .tech-item {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+        border-radius: 15px;
+    }
+
+    .cta-buttons {
+        gap: 0.8rem;
+        margin-top: 1.5rem;
+    }
+
+    .btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.85rem;
+        min-width: 120px;
+        border-radius: 20px;
+    }
+
+    /* Profile image adjustment */
+    .profile-pic {
+        width: 180px;
+        height: 240px;
+        border-radius: 12px;
+    }
+
+    .hero-gif {
+        width: 50px;
+        height: 50px;
+    }
+
+    .floating-animation {
+        top: 5px;
+        right: 0px;
+    }
+
+    /* Sections spacing */
+    .services, .about, .contact {
+        padding: 2.5rem 0;
+    }
+
+    .section-header {
+        margin-bottom: 2rem;
+        padding: 0 0.8rem;
     }
 
     .section-header h2 {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        line-height: 1.2;
+    }
+
+    .section-header p {
+        font-size: 1rem;
+    }
+
+    /* Service cards ultra-compact */
+    .services-grid {
+        gap: 1.2rem;
+        padding: 0 0.5rem;
     }
 
     .service-card {
-        padding: 1.5rem;
+        padding: 1.5rem 1rem;
+        margin: 0 0.5rem;
+        border-radius: 15px;
     }
 
-    .contact-form {
-        padding: 1.5rem;
+    .service-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .service-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .service-card p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .service-features li {
+        font-size: 0.85rem;
+        padding: 0.3rem 0;
+    }
+
+    /* About section compact */
+    .about-content {
+        gap: 1.5rem;
+    }
+
+    .about-text h2 {
+        font-size: 1.8rem;
+    }
+
+    .about-intro {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .skills-container h3 {
+        font-size: 1.3rem;
+    }
+
+    .skill-item {
+        padding: 0.8rem;
+        font-size: 0.9rem;
     }
 
     .about-stats {
         flex-direction: column;
+        gap: 0.8rem;
     }
 
-    .profile-pic {
-        width: 200px;
-        height: 280px;
+    .stat-item {
+        padding: 1.2rem;
+        min-width: 100%;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+    }
+
+    /* Contact section ultra-mobile */
+    .contact-content {
+        gap: 1.5rem;
+    }
+
+    .contact-info h2 {
+        font-size: 1.8rem;
+    }
+
+    .contact-description {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .contact-method {
+        padding: 0.8rem;
+        margin-bottom: 0.6rem;
+        border-radius: 8px;
+    }
+
+    .contact-method h4 {
+        font-size: 1rem;
+    }
+
+    .contact-method p {
+        font-size: 0.85rem;
+    }
+
+    .social-links {
+        gap: 0.6rem;
+        margin-top: 1rem;
+    }
+
+    .social-link {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+
+    /* Contact form compact */
+    .contact-form {
+        padding: 1.2rem;
+        margin: 0 0.5rem;
+        border-radius: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+        border-radius: 8px;
+    }
+
+    .form-group textarea {
+        min-height: 100px;
+    }
+
+    /* Footer ultra-compact */
+    .footer {
+        padding: 1.5rem 0;
+    }
+
+    .footer-content {
+        gap: 0.8rem;
+        padding: 0 0.8rem;
+    }
+
+    .footer-left p,
+    .footer-right p {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    /* Dark mode toggle */
+    .dark-mode-text {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+        border-radius: 12px;
+    }
+
+    /* WhatsApp button */
+    .whatsapp-float {
+        right: 12px;
+        bottom: 12px;
+    }
+
+    .whatsapp-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.4rem;
+    }
+
+    /* Typography improvements */
+    .typing-container {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Ensure touch targets are large enough */
+    .nav-toggle {
+        padding: 0.5rem;
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    .bar {
+        width: 22px;
+        height: 2px;
+    }
+}
+
+/* Very Small Devices (360px and below) - For older Android phones */
+@media (max-width: 360px) {
+    .container {
+        padding: 0 0.6rem;
+    }
+
+    .hero {
+        padding-top: 65px;
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
+    }
+
+    .hero-container {
+        padding: 0 0.3rem;
+    }
+
+    .main-title {
+        font-size: 1.6rem;
+        line-height: 1.2;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
     }
 
     .hero-visual {
-        margin-top: 1.5rem;
-        height: 300px;
+        height: 200px;
     }
 
-    .floating-animation {
-        top: 10px;
-        right: 0px;
-        position: relative;
+    .profile-pic {
+        width: 150px;
+        height: 200px;
     }
 
     .hero-gif {
-        width: 60px;
-        height: 60px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .service-card {
+        padding: 1.2rem 0.8rem;
+        margin: 0 0.2rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.6rem;
+    }
+
+    .section-header p {
+        font-size: 0.9rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 200px;
+        padding: 0.8rem;
+    }
+
+    .contact-form {
+        padding: 1rem;
+        margin: 0 0.2rem;
+    }
+
+    .whatsapp-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+
+    .social-link {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    .nav-logo .logo-text {
+        font-size: 0.8rem;
+    }
+
+    .nav-logo .logo-img {
+        width: 25px;
+        height: 25px;
+    }
+
+    .tech-item {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .contact-method {
+        padding: 0.6rem;
+    }
+
+    .contact-method h4 {
+        font-size: 0.9rem;
+    }
+
+    .contact-method p {
+        font-size: 0.8rem;
+    }
+}
+
+/* Landscape orientation improvements for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero {
+        padding-top: 60px;
+        min-height: 90vh;
+    }
+
+    .hero-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        text-align: left;
+    }
+
+    .hero-visual {
+        order: 2;
+        height: 250px;
+    }
+
+    .hero-text {
+        order: 1;
+    }
+
+    .main-title {
+        font-size: 2rem;
+    }
+
+    .profile-pic {
+        width: 160px;
+        height: 220px;
+    }
+
+    .about-stats {
+        flex-direction: row;
+    }
+
+    .stat-item {
+        min-width: 120px;
+    }
+}
+
+/* High DPI screens optimization */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .logo-img, .profile-pic {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
     }
 }
 
