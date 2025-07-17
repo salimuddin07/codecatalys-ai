@@ -13,10 +13,7 @@ const STATIC_ASSETS = [
   '/images/robot.svg',
   '/images/profile-photo.jpg',
   '/images/animated-logo.svg',
-  '/manifest.json',
-  // External resources
-  'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+  '/manifest.json'
 ];
 
 // Install event - cache static assets
