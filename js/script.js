@@ -1,6 +1,9 @@
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     
+    // PWA Installation and Service Worker Registration
+    initializePWA();
+    
     // Navigation Toggle for Mobile
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
@@ -483,6 +486,301 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log('🚀 AI Automation Website Loaded Successfully!');
 });
+
+// PWA Functions
+function initializePWA() {
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('🔧 ServiceWorker registered successfully:', registration.scope);
+                    
+                    // Check for updates
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                showUpdateAvailable();
+                            }
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.log('❌ ServiceWorker registration failed:', error);
+                });
+        });
+    }
+
+    // PWA Install Prompt
+    let deferredPrompt;
+    
+    window.addEventListener('beforeinstallprompt', (e) => {
+        console.log('💾 PWA Install prompt triggered');
+        e.preventDefault();
+        deferredPrompt = e;
+        showInstallPrompt();
+    });
+
+    // Handle successful PWA installation
+    window.addEventListener('appinstalled', (evt) => {
+        console.log('📱 PWA was installed successfully');
+        showNotification('CodeCatalyst AI app installed successfully!', 'success');
+        hideInstallPrompt();
+    });
+
+    // Detect if app is running in standalone mode
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+        console.log('📱 Running in PWA mode');
+        document.body.classList.add('pwa-mode');
+    }
+}
+
+function showInstallPrompt() {
+    // Create install button
+    const installContainer = document.createElement('div');
+    installContainer.id = 'pwa-install-container';
+    installContainer.innerHTML = `
+        <div class="pwa-install-prompt">
+            <div class="pwa-install-content">
+                <div class="pwa-install-icon">
+                    <i class="fas fa-download"></i>
+                </div>
+                <div class="pwa-install-text">
+                    <h3>Install CodeCatalyst AI</h3>
+                    <p>Get quick access to our AI automation services</p>
+                </div>
+                <div class="pwa-install-actions">
+                    <button id="pwa-install-btn" class="pwa-btn pwa-btn-primary">
+                        <i class="fas fa-plus"></i> Install App
+                    </button>
+                    <button id="pwa-dismiss-btn" class="pwa-btn pwa-btn-secondary">
+                        <i class="fas fa-times"></i> Later
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Add styles
+    const style = document.createElement('style');
+    style.textContent = `
+        #pwa-install-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            z-index: 10000;
+            pointer-events: none;
+        }
+
+        .pwa-install-prompt {
+            background: linear-gradient(135deg, rgba(167, 164, 89, 0.98), rgba(52, 152, 219, 0.98));
+            color: white;
+            padding: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(100px);
+            transition: transform 0.3s ease;
+            pointer-events: all;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .pwa-install-prompt.show {
+            transform: translateY(0);
+        }
+
+        .pwa-install-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .pwa-install-icon {
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .pwa-install-text h3 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .pwa-install-text p {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .pwa-install-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .pwa-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .pwa-btn-primary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .pwa-btn-primary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .pwa-btn-secondary {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .pwa-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 480px) {
+            #pwa-install-container {
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+            }
+            
+            .pwa-install-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .pwa-install-actions {
+                flex-direction: row;
+                margin-left: 0;
+                width: 100%;
+            }
+            
+            .pwa-btn {
+                flex: 1;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Add to DOM
+    document.body.appendChild(installContainer);
+
+    // Trigger animation
+    setTimeout(() => {
+        installContainer.querySelector('.pwa-install-prompt').classList.add('show');
+    }, 500);
+
+    // Handle install button click
+    document.getElementById('pwa-install-btn').addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            
+            if (outcome === 'accepted') {
+                console.log('💾 User accepted PWA install');
+                showNotification('Installing CodeCatalyst AI app...', 'info');
+            } else {
+                console.log('❌ User declined PWA install');
+            }
+            
+            deferredPrompt = null;
+            hideInstallPrompt();
+        }
+    });
+
+    // Handle dismiss button click
+    document.getElementById('pwa-dismiss-btn').addEventListener('click', () => {
+        hideInstallPrompt();
+        localStorage.setItem('pwa-install-dismissed', Date.now());
+    });
+
+    // Auto-hide after 10 seconds
+    setTimeout(() => {
+        if (document.getElementById('pwa-install-container')) {
+            hideInstallPrompt();
+        }
+    }, 10000);
+}
+
+function hideInstallPrompt() {
+    const container = document.getElementById('pwa-install-container');
+    if (container) {
+        const prompt = container.querySelector('.pwa-install-prompt');
+        prompt.classList.remove('show');
+        setTimeout(() => {
+            container.remove();
+        }, 300);
+    }
+}
+
+function showUpdateAvailable() {
+    const updateNotification = document.createElement('div');
+    updateNotification.innerHTML = `
+        <div style="
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            z-index: 10001;
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 400px;
+            margin: 0 auto;
+        ">
+            <div>
+                <strong>🔄 Update Available</strong>
+                <br>
+                <small>A new version of CodeCatalyst AI is ready</small>
+            </div>
+            <button id="update-btn" style="
+                background: rgba(255, 255, 255, 0.2);
+                color: white;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                padding: 0.5rem 1rem;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: 500;
+            ">Update</button>
+        </div>
+    `;
+    
+    document.body.appendChild(updateNotification);
+    
+    document.getElementById('update-btn').addEventListener('click', () => {
+        if (navigator.serviceWorker.controller) {
+            navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
+            window.location.reload();
+        }
+    });
+}
 
 // Utility functions
 const utils = {

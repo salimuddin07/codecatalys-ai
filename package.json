@@ -1,0 +1,63 @@
+{
+  "name": "codecatalyst-ai-desktop",
+  "version": "1.0.0",
+  "description": "CodeCatalyst AI - Premium AI Automation Solutions Desktop App",
+  "main": "electron/main.js",
+  "homepage": "./",
+  "scripts": {
+    "electron": "electron .",
+    "electron-dev": "ELECTRON_IS_DEV=true electron .",
+    "build-electron": "npm run build && electron-builder",
+    "dist": "electron-builder --publish=never",
+    "pack": "electron-builder --dir",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "appId": "com.codecatalyst.ai",
+    "productName": "CodeCatalyst AI",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "**/*",
+      "!node_modules",
+      "!dist-electron",
+      "!electron/src",
+      "!*.md"
+    ],
+    "mac": {
+      "category": "public.app-category.business",
+      "icon": "electron/assets/icon.icns",
+      "hardenedRuntime": true,
+      "entitlements": "electron/assets/entitlements.mac.plist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "electron/assets/icon.ico",
+      "publisherName": "CodeCatalyst AI"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "electron/assets/icon.png",
+      "category": "Office"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4"
+  },
+  "dependencies": {
+    "electron-updater": "^6.1.4"
+  },
+  "author": {
+    "name": "CodeCatalyst AI",
+    "email": "salimuddinsaiyed5@gmail.com"
+  },
+  "license": "MIT"
+}
