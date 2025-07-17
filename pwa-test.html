@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Installation Test - CodeCatalyst AI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .test-item {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+        }
+        .pass { background: #10B981; }
+        .fail { background: #EF4444; }
+        .warning { background: #F59E0B; }
+        button {
+            background: #a7a459;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #8b8746;
+        }
+        #install-status {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            background: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 PWA Installation Diagnostic</h1>
+    <div id="install-status">
+        <h2>Installation Status</h2>
+        <p id="status-text">Checking...</p>
+        <button id="install-btn" style="display: none;">Install App</button>
+        <button id="refresh-btn" onclick="location.reload()">Refresh Test</button>
+    </div>
+
+    <h2>PWA Requirements Check</h2>
+    <div id="requirements-check"></div>
+
+    <h2>Manual Installation Instructions</h2>
+    <div style="background: #333; padding: 20px; border-radius: 10px; margin: 20px 0;">
+        <h3>🤖 For Android:</h3>
+        <ol>
+            <li>Open this page in <strong>Chrome browser</strong></li>
+            <li>Look for a <strong>"Install"</strong> banner or popup</li>
+            <li>Or tap <strong>menu (⋮) → "Add to Home Screen"</strong></li>
+            <li>Tap <strong>"Install"</strong> or <strong>"Add"</strong></li>
+        </ol>
+
+        <h3>📱 For iPhone:</h3>
+        <ol>
+            <li>Open this page in <strong>Safari browser</strong></li>
+            <li>Tap the <strong>Share button</strong> (square with arrow)</li>
+            <li>Select <strong>"Add to Home Screen"</strong></li>
+            <li>Tap <strong>"Add"</strong></li>
+        </ol>
+
+        <h3>💻 For Desktop:</h3>
+        <ol>
+            <li>Open in <strong>Chrome, Edge, or Firefox</strong></li>
+            <li>Look for <strong>install icon (⊕)</strong> in address bar</li>
+            <li>Or go to <strong>menu → "Install CodeCatalyst AI"</strong></li>
+        </ol>
+    </div>
+
+    <div style="background: #444; padding: 15px; border-radius: 10px; margin: 20px 0;">
+        <h3>🚨 Common Issues & Solutions:</h3>
+        <ul>
+            <li><strong>No install option:</strong> Make sure you're using HTTPS (not HTTP)</li>
+            <li><strong>App won't install:</strong> Clear browser cache and try again</li>
+            <li><strong>iPhone issues:</strong> Use Safari browser specifically</li>
+            <li><strong>Android issues:</strong> Use Chrome or Samsung Browser</li>
+            <li><strong>Still not working:</strong> Contact support with your device/browser info</li>
+        </ul>
+    </div>
+
+    <script>
+        let deferredPrompt;
+        const statusText = document.getElementById('status-text');
+        const installBtn = document.getElementById('install-btn');
+        const requirementsDiv = document.getElementById('requirements-check');
+
+        // PWA Requirements Check
+        function checkPWARequirements() {
+            const requirements = [
+                {
+                    name: 'Service Worker Support',
+                    check: () => 'serviceWorker' in navigator,
+                    required: true
+                },
+                {
+                    name: 'Manifest File',
+                    check: async () => {
+                        try {
+                            const response = await fetch('/manifest.json');
+                            return response.ok;
+                        } catch {
+                            return false;
+                        }
+                    },
+                    required: true
+                },
+                {
+                    name: 'HTTPS Connection',
+                    check: () => location.protocol === 'https:' || location.hostname === 'localhost',
+                    required: true
+                },
+                {
+                    name: 'Standalone Display',
+                    check: () => window.matchMedia('(display-mode: standalone)').matches,
+                    required: false
+                },
+                {
+                    name: 'Install Prompt Available',
+                    check: () => !!deferredPrompt,
+                    required: false
+                }
+            ];
+
+            requirements.forEach(async (req) => {
+                const result = await req.check();
+                const div = document.createElement('div');
+                div.className = `test-item ${result ? 'pass' : (req.required ? 'fail' : 'warning')}`;
+                div.innerHTML = `
+                    <strong>${req.name}:</strong> 
+                    ${result ? '✅ Pass' : '❌ Fail'}
+                    ${!req.required ? ' (Optional)' : ''}
+                `;
+                requirementsDiv.appendChild(div);
+            });
+        }
+
+        // Listen for install prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            statusText.textContent = '✅ PWA can be installed! Click the button below.';
+            installBtn.style.display = 'inline-block';
+            installBtn.onclick = async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    statusText.textContent = outcome === 'accepted' ? 
+                        '🎉 App installed successfully!' : 
+                        '❌ Installation cancelled by user';
+                    deferredPrompt = null;
+                    installBtn.style.display = 'none';
+                }
+            };
+        });
+
+        // Check if already installed
+        window.addEventListener('appinstalled', (evt) => {
+            statusText.textContent = '🎉 App is already installed!';
+            installBtn.style.display = 'none';
+        });
+
+        // Initialize
+        setTimeout(() => {
+            if (!deferredPrompt) {
+                if (window.matchMedia('(display-mode: standalone)').matches) {
+                    statusText.textContent = '📱 App is running in standalone mode (already installed)';
+                } else {
+                    statusText.textContent = '⚠️ Install prompt not available. Try manual installation or check requirements below.';
+                }
+            }
+            checkPWARequirements();
+        }, 2000);
+
+        // Register service worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').then(registration => {
+                console.log('SW registered:', registration);
+            }).catch(error => {
+                console.log('SW registration failed:', error);
+            });
+        }
+    </script>
+</body>
+</html>
