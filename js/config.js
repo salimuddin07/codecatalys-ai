@@ -2,10 +2,14 @@
 // Replace these values with your actual EmailJS credentials
 
 const EMAIL_CONFIG = {
-    // Get these from your EmailJS dashboard
-    PUBLIC_KEY: 'YOUR_EMAILJS_PUBLIC_KEY',
-    SERVICE_ID: 'YOUR_SERVICE_ID',
-    TEMPLATE_ID: 'YOUR_TEMPLATE_ID',
+    // Get these from your EmailJS dashboard at https://www.emailjs.com/
+    // 1. Sign up at EmailJS.com
+    // 2. Create an email service (Gmail, Outlook, etc.)
+    // 3. Create an email template
+    // 4. Get your public key from Account settings
+    PUBLIC_KEY: 'YOUR_EMAILJS_PUBLIC_KEY', // Replace with your actual public key
+    SERVICE_ID: 'YOUR_SERVICE_ID', // Replace with your service ID
+    TEMPLATE_ID: 'YOUR_TEMPLATE_ID', // Replace with your template ID
     
     // Email settings
     RECIPIENT_EMAIL: 'salimuddinsaiyed5@gmail.com',
