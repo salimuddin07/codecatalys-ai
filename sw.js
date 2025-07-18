@@ -1,6 +1,6 @@
-const CACHE_NAME = 'codecatalyst-ai-v1.1.0';
-const STATIC_CACHE = 'codecatalyst-static-v1.1.0';
-const DYNAMIC_CACHE = 'codecatalyst-dynamic-v1.1.0';
+const CACHE_NAME = 'codecatalyst-ai-v2.0.0';
+const STATIC_CACHE = 'codecatalyst-static-v2.0.0';
+const DYNAMIC_CACHE = 'codecatalyst-dynamic-v2.0.0';
 
 // Define what to cache
 const STATIC_ASSETS = [
@@ -10,11 +10,14 @@ const STATIC_ASSETS = [
   '/js/script.js',
   '/js/config.js',
   '/js/email-service.js',
-  '/images/robot.svg',
-  '/images/profile-photo.jpg',
-  '/images/animated-logo.svg',
-  '/images/icon-192.png',
-  '/images/icon-512.png',
+  '/assets/icons/robot.svg',
+  '/assets/icons/profile-photo.jpg',
+  '/assets/icons/animated-logo.svg',
+  '/assets/icons/icon-192.png',
+  '/assets/icons/icon-512.png',
+  '/html/install.html',
+  '/html/mobile-install-test.html',
+  '/tools/quick-icon-generator.html',
   '/manifest.json'
 ];
 

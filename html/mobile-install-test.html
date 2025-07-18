@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Install Test - CodeCatalyst AI</title>
+    
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#a7a459">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CodeCatalyst AI">
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .install-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 25px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 30px 10px;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+            display: block;
+            width: 80%;
+            margin: 30px auto;
+        }
+        .install-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+        .status.success { background: rgba(40, 167, 69, 0.3); }
+        .status.warning { background: rgba(255, 193, 7, 0.3); }
+        .status.error { background: rgba(220, 53, 69, 0.3); }
+        
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 Install Test</h1>
+        <p>Your PWA icons are ready! Test installation here.</p>
+        
+        <button id="install-btn" class="install-btn" onclick="handleInstall()">
+            📱 Install CodeCatalyst AI App
+        </button>
+        
+        <div id="status-area"></div>
+        
+        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin: 20px 0; text-align: left;">
+            <h3>📋 Installation Status:</h3>
+            <div id="requirements-check"></div>
+        </div>
+        
+        <a href="../index.html" class="back-btn">← Back to Main Site</a>
+    </div>
+
+    <script>
+        let deferredPrompt;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            checkRequirements();
+            registerServiceWorker();
+        });
+        
+        // Check PWA requirements
+        function checkRequirements() {
+            const container = document.getElementById('requirements-check');
+            let html = '';
+            
+            // HTTPS check
+            const isSecure = location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname.includes('127.0.0.1') || location.hostname.includes('192.168.') || location.hostname.includes('172.');
+            html += `<div class="status ${isSecure ? 'success' : 'error'}">🔒 Secure: ${isSecure ? '✅' : '❌'}</div>`;
+            
+            // Service Worker check
+            const hasSW = 'serviceWorker' in navigator;
+            html += `<div class="status ${hasSW ? 'success' : 'error'}">🔧 Service Worker: ${hasSW ? '✅' : '❌'}</div>`;
+            
+            // Manifest check
+            const hasManifest = document.querySelector('link[rel="manifest"]');
+            html += `<div class="status ${hasManifest ? 'success' : 'error'}">📋 Manifest: ${hasManifest ? '✅' : '❌'}</div>`;
+            
+            // Standalone check
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+            html += `<div class="status ${isStandalone ? 'success' : 'warning'}">📱 Installed: ${isStandalone ? '✅ Already installed!' : '⚠️ Not yet'}</div>`;
+            
+            container.innerHTML = html;
+            
+            if (isStandalone) {
+                document.getElementById('install-btn').innerHTML = '🎉 Already Installed!';
+                document.getElementById('install-btn').disabled = true;
+                document.getElementById('install-btn').style.opacity = '0.6';
+            }
+        }
+        
+        // Register service worker
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('../sw.js')
+                    .then(registration => {
+                        console.log('✅ Service Worker registered');
+                        updateStatus('✅ Service Worker registered successfully', 'success');
+                    })
+                    .catch(error => {
+                        console.error('❌ Service Worker registration failed:', error);
+                        updateStatus('❌ Service Worker registration failed', 'error');
+                    });
+            }
+        }
+        
+        // Handle beforeinstallprompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('💾 Install prompt available');
+            e.preventDefault();
+            deferredPrompt = e;
+            updateStatus('✅ Install prompt ready!', 'success');
+        });
+        
+        // Handle app installed
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('🎉 App installed successfully');
+            updateStatus('🎉 App installed successfully!', 'success');
+            setTimeout(() => {
+                document.getElementById('install-btn').innerHTML = '🎉 Successfully Installed!';
+                document.getElementById('install-btn').disabled = true;
+                document.getElementById('install-btn').style.opacity = '0.6';
+            }, 1000);
+        });
+        
+        // Handle install button click
+        async function handleInstall() {
+            const btn = document.getElementById('install-btn');
+            
+            if (deferredPrompt) {
+                try {
+                    btn.innerHTML = '⏳ Installing...';
+                    btn.disabled = true;
+                    
+                    await deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    
+                    if (outcome === 'accepted') {
+                        updateStatus('🎉 Installation accepted!', 'success');
+                    } else {
+                        updateStatus('❌ Installation declined', 'warning');
+                        btn.innerHTML = '📱 Try Again';
+                        btn.disabled = false;
+                        showManualInstructions();
+                    }
+                    
+                    deferredPrompt = null;
+                } catch (error) {
+                    console.error('Install error:', error);
+                    updateStatus('❌ Error: ' + error.message, 'error');
+                    btn.innerHTML = '📱 Install App';
+                    btn.disabled = false;
+                }
+            } else {
+                showManualInstructions();
+            }
+        }
+        
+        function showManualInstructions() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            let instructions = '';
+            
+            if (userAgent.includes('android') && userAgent.includes('chrome')) {
+                instructions = '📱 Android Chrome: Tap menu (⋮) → "Add to Home screen"';
+            } else if (userAgent.includes('iphone') || userAgent.includes('ipad')) {
+                instructions = '📱 iOS Safari: Tap share (□↗) → "Add to Home Screen"';
+            } else {
+                instructions = '💻 Desktop: Look for install icon in address bar';
+            }
+            
+            updateStatus(instructions, 'warning');
+        }
+        
+        function updateStatus(message, type) {
+            const area = document.getElementById('status-area');
+            const status = document.createElement('div');
+            status.className = `status ${type}`;
+            status.innerHTML = message;
+            area.appendChild(status);
+            
+            // Keep only last 3 messages
+            const messages = area.querySelectorAll('.status');
+            if (messages.length > 3) {
+                messages[0].remove();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Structure - CodeCatalyst AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            text-align: center;
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .main-content {
+            padding: 40px 0;
+        }
+        
+        .folder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .folder-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .folder-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+        
+        .folder-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .folder-icon {
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+        
+        .folder-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .folder-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .file-list {
+            list-style: none;
+        }
+        
+        .file-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .file-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .file-list a {
+            color: #007bff;
+            text-decoration: none;
+            margin-left: 10px;
+            flex: 1;
+        }
+        
+        .file-list a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        
+        .file-icon {
+            width: 16px;
+            text-align: center;
+        }
+        
+        .main-actions {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .action-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .action-btn.secondary {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+        
+        .action-btn.secondary:hover {
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #28a745;
+            margin-right: 8px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>🚀 CodeCatalyst AI</h1>
+            <p>Professional Project Structure & Navigation</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="folder-grid">
+                <!-- Main Application -->
+                <div class="folder-card">
+                    <div class="folder-header">
+                        <span class="folder-icon">🏠</span>
+                        <h3 class="folder-title">Main Application</h3>
+                    </div>
+                    <p class="folder-description">Core application files and main entry points</p>
+                    <ul class="file-list">
+                        <li><span class="file-icon">📄</span><a href="index.html">index.html</a></li>
+                        <li><span class="file-icon">📋</span><a href="manifest.json">manifest.json</a></li>
+                        <li><span class="file-icon">⚙️</span><a href="sw.js">sw.js (Service Worker)</a></li>
+                        <li><span class="file-icon">📖</span><a href="README.md">README.md</a></li>
+                    </ul>
+                </div>
+
+                <!-- HTML Pages -->
+                <div class="folder-card">
+                    <div class="folder-header">
+                        <span class="folder-icon">📄</span>
+                        <h3 class="folder-title">HTML Pages</h3>
+                    </div>
+                    <p class="folder-description">Additional HTML pages and components</p>
+                    <ul class="file-list">
+                        <li><span class="file-icon">📱</span><a href="html/install.html">install.html</a></li>
+                        <li><span class="file-icon">🧪</span><a href="html/mobile-install-test.html">mobile-install-test.html</a></li>
+                        <li><span class="file-icon">📊</span><a href="html/pwa-test.html">pwa-test.html</a></li>
+                        <li><span class="file-icon">🖼️</span><a href="html/image-test.html">image-test.html</a></li>
+                    </ul>
+                </div>
+
+                <!-- JavaScript -->
+                <div class="folder-card">
+                    <div class="folder-header">
+                        <span class="folder-icon">⚡</span>
+                        <h3 class="folder-title">JavaScript</h3>
+                    </div>
+                    <p class="folder-description">Client-side scripts and functionality</p>
+                    <ul class="file-list">
+                        <li><span class="file-icon">🎯</span><a href="js/script.js">script.js (Main)</a></li>
+                        <li><span class="file-icon">⚙️</span><a href="js/config.js">config.js</a></li>
+                        <li><span class="file-icon">📧</span><a href="js/email-service.js">email-service.js</a></li>
+                        <li><span class="file-icon">📝</span><a href="js/contact-form-backup.js">contact-form-backup.js</a></li>
+                    </ul>
+                </div>
+
+                <!-- Styles -->
+                <div class="folder-card">
+                    <div class="folder-header">
+                        <span class="folder-icon">🎨</span>
+                        <h3 class="folder-title">Stylesheets</h3>
+                    </div>
+                    <p class="folder-description">CSS styles and visual design</p>
+                    <ul class="file-list">
+                        <li><span class="file-icon">🎨</span><a href="css/style.css">style.css (Main)</a></li>
+                    </ul>
+                </div>
+
+                <!-- Assets -->
+                <div class="folder-card">
+                    <div class="folder-header">
+                        <span class="folder-icon">🖼️</span>
+                        <h3 class="folder-title">Assets</h3>
+                    </div>
+                    <p class="folder-description">Images, icons, and media files</p>
+                    <ul class="file-list">
+                        <li><span class="file-icon">🤖</span><a href="assets/icons/robot.svg">robot.svg</a></li>
+                        <li><span class="file-icon">👤</span><a href="assets/icons/profile-photo.jpg">profile-photo.jpg</a></li>
+                        <li><span class="file-icon">📱</span><a href="assets/icons/icon-192.png">icon-192.png</a></li>
+                        <li><span class="file-icon">💻</span><a href="assets/icons/icon-512.png">icon-512.png</a></li>
+                    </ul>
+                </div>
+
+                <!-- Tools -->
+                <div class="folder-card">
+                    <div class="folder-header">
+                        <span class="folder-icon">🔧</span>
+                        <h3 class="folder-title">Development Tools</h3>
+                    </div>
+                    <p class="folder-description">Icon generators and development utilities</p>
+                    <ul class="file-list">
+                        <li><span class="file-icon">⚡</span><a href="tools/quick-icon-generator.html">quick-icon-generator.html</a></li>
+                        <li><span class="file-icon">🎨</span><a href="tools/create-icons.html">create-icons.html</a></li>
+                        <li><span class="file-icon">🔨</span><a href="tools/generate-icons.html">generate-icons.html</a></li>
+                    </ul>
+                </div>
+
+                <!-- Scripts -->
+                <div class="folder-card">
+                    <div class="folder-header">
+                        <span class="folder-icon">⚙️</span>
+                        <h3 class="folder-title">Build Scripts</h3>
+                    </div>
+                    <p class="folder-description">Build automation and server scripts</p>
+                    <ul class="file-list">
+                        <li><span class="file-icon">🚀</span><a href="scripts/start-pwa-server.bat">start-pwa-server.bat</a></li>
+                        <li><span class="file-icon">🔧</span><a href="scripts/build-desktop.bat">build-desktop.bat</a></li>
+                        <li><span class="file-icon">🌐</span><a href="scripts/https-server.js">https-server.js</a></li>
+                    </ul>
+                </div>
+
+                <!-- Documentation -->
+                <div class="folder-card">
+                    <div class="folder-header">
+                        <span class="folder-icon">📚</span>
+                        <h3 class="folder-title">Documentation</h3>
+                    </div>
+                    <p class="folder-description">Project documentation and guides</p>
+                    <ul class="file-list">
+                        <li><span class="file-icon">📱</span><a href="MOBILE_INSTALL_GUIDE.md">Mobile Install Guide</a></li>
+                        <li><span class="file-icon">🧪</span><a href="PWA_TESTING_GUIDE.md">PWA Testing Guide</a></li>
+                        <li><span class="file-icon">📊</span><a href="PROJECT_SUMMARY.md">Project Summary</a></li>
+                        <li><span class="file-icon">📁</span><a href="docs/">docs/ folder</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="main-actions">
+                <h3 style="margin-bottom: 20px; color: #333;">
+                    <span class="status-indicator"></span>Project Status: Ready for Deployment
+                </h3>
+                <a href="index.html" class="action-btn">🏠 View Main App</a>
+                <a href="html/mobile-install-test.html" class="action-btn secondary">📱 Test PWA Install</a>
+                <a href="tools/quick-icon-generator.html" class="action-btn secondary">🔧 Icon Generator</a>
+                <a href="scripts/start-pwa-server.bat" class="action-btn secondary">🚀 Start Server</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>🚀 CodeCatalyst AI - Professional Progressive Web Application</p>
+        <p>Organized structure for optimal development and deployment</p>
+    </footer>
+
+    <script>
+        // Add some interactive features
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects and animations
+            const cards = document.querySelectorAll('.folder-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Check if service worker is registered
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    const statusIndicator = document.querySelector('.status-indicator');
+                    if (registrations.length > 0) {
+                        statusIndicator.style.background = '#28a745';
+                    } else {
+                        statusIndicator.style.background = '#ffc107';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

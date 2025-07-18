@@ -488,6 +488,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // PWA Functions
+let deferredPrompt; // Global variable for install prompt
+let installPromptShown = false;
+
 function initializePWA() {
     // Register Service Worker
     if ('serviceWorker' in navigator) {
@@ -513,13 +516,14 @@ function initializePWA() {
     }
 
     // PWA Install Prompt
-    let deferredPrompt;
-    let installPromptShown = false;
     
     window.addEventListener('beforeinstallprompt', (e) => {
         console.log('💾 PWA Install prompt triggered');
         e.preventDefault();
         deferredPrompt = e;
+        
+        // Show the install button in the hero section
+        showMobileInstallButton();
         
         // Don't show immediately on mobile, wait for user interaction
         if (window.innerWidth <= 768) {
@@ -547,6 +551,15 @@ function initializePWA() {
         document.body.classList.add('pwa-mode');
         // Hide browser UI elements when in standalone mode
         addStandaloneStyles();
+    } else {
+        // Show install button for mobile users even if beforeinstallprompt hasn't fired yet
+        setTimeout(() => {
+            if (isMobileDevice() && !document.getElementById('mobile-install-btn').style.display) {
+                showMobileInstallButton();
+                // Also show a floating notification for mobile users
+                showFloatingInstallNotification();
+            }
+        }, 2000);
     }
 }
 
@@ -983,6 +996,156 @@ function showUpdateAvailable() {
             window.location.reload();
         }
     });
+}
+
+// Mobile Install Button Functions
+function showMobileInstallButton() {
+    const installBtn = document.getElementById('mobile-install-btn');
+    if (installBtn) {
+        // Show button for mobile users regardless of deferredPrompt availability
+        if (isMobileDevice() || deferredPrompt) {
+            installBtn.style.display = 'inline-block';
+            installBtn.onclick = handleMobileInstall;
+            
+            // Add extra visibility for mobile devices
+            if (isMobileDevice()) {
+                installBtn.style.animation = 'pulse 2s infinite';
+                console.log('📱 Mobile install button shown');
+            }
+        }
+    }
+}
+
+async function handleMobileInstall() {
+    const installBtn = document.getElementById('mobile-install-btn');
+    
+    if (deferredPrompt) {
+        // Change button text to show loading
+        const originalText = installBtn.innerHTML;
+        installBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Installing...';
+        installBtn.disabled = true;
+        
+        try {
+            // Show the install prompt
+            await deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            
+            console.log(`💾 Install prompt result: ${outcome}`);
+            
+            if (outcome === 'accepted') {
+                showNotification('🎉 CodeCatalyst AI app is being installed!', 'success');
+                installBtn.style.display = 'none';
+            } else {
+                // Reset button if declined
+                installBtn.innerHTML = originalText;
+                installBtn.disabled = false;
+                showInstallInstructions();
+            }
+            
+            deferredPrompt = null;
+        } catch (error) {
+            console.error('❌ Install error:', error);
+            installBtn.innerHTML = originalText;
+            installBtn.disabled = false;
+            showInstallInstructions();
+        }
+    } else {
+        // Fallback for browsers that don't support beforeinstallprompt
+        showInstallInstructions();
+    }
+}
+
+function showInstallInstructions() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    let instructions = '';
+    
+    if (userAgent.includes('android') && userAgent.includes('chrome')) {
+        instructions = `
+        📱 <strong>Android Chrome Instructions:</strong><br>
+        1. Tap the menu (⋮) in the top right<br>
+        2. Select "Add to Home screen"<br>
+        3. Tap "Add" to install the app
+        `;
+    } else if (userAgent.includes('iphone') || userAgent.includes('ipad')) {
+        instructions = `
+        📱 <strong>iOS Safari Instructions:</strong><br>
+        1. Tap the share button (□↗)<br>
+        2. Scroll down and tap "Add to Home Screen"<br>
+        3. Tap "Add" to install the app
+        `;
+    } else {
+        instructions = `
+        💻 <strong>Desktop Instructions:</strong><br>
+        1. Look for the install icon in your browser's address bar<br>
+        2. Click it to install the app<br>
+        3. Or check browser menu for "Install" option
+        `;
+    }
+    
+    showNotification(instructions, 'info', 8000);
+}
+
+function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+function showFloatingInstallNotification() {
+    // Don't show if already installed or dismissed
+    if (localStorage.getItem('install-notification-dismissed') || 
+        window.matchMedia('(display-mode: standalone)').matches) {
+        return;
+    }
+    
+    setTimeout(() => {
+        const notification = document.createElement('div');
+        notification.id = 'floating-install-notification';
+        notification.innerHTML = `
+            <div style="
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: linear-gradient(135deg, #28a745, #20c997);
+                color: white;
+                padding: 15px 20px;
+                border-radius: 25px;
+                box-shadow: 0 4px 20px rgba(40, 167, 69, 0.3);
+                z-index: 10000;
+                font-weight: 500;
+                animation: slideUp 0.5s ease;
+                cursor: pointer;
+                max-width: 90%;
+                text-align: center;
+            ">
+                📱 Install this app on your home screen! 
+                <button onclick="this.parentElement.parentElement.remove(); localStorage.setItem('install-notification-dismissed', Date.now());" 
+                        style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 5px 10px; border-radius: 15px; margin-left: 10px; cursor: pointer;">
+                    ✕
+                </button>
+            </div>
+            <style>
+                @keyframes slideUp {
+                    from { transform: translate(-50%, 100px); opacity: 0; }
+                    to { transform: translate(-50%, 0); opacity: 1; }
+                }
+            </style>
+        `;
+        
+        notification.onclick = (e) => {
+            if (e.target.tagName !== 'BUTTON') {
+                handleMobileInstall();
+            }
+        };
+        
+        document.body.appendChild(notification);
+        
+        // Auto-hide after 8 seconds
+        setTimeout(() => {
+            if (document.getElementById('floating-install-notification')) {
+                notification.remove();
+            }
+        }, 8000);
+    }, 3000);
 }
 
 // Utility functions
