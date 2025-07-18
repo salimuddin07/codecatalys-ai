@@ -514,12 +514,23 @@ function initializePWA() {
 
     // PWA Install Prompt
     let deferredPrompt;
+    let installPromptShown = false;
     
     window.addEventListener('beforeinstallprompt', (e) => {
         console.log('💾 PWA Install prompt triggered');
         e.preventDefault();
         deferredPrompt = e;
-        showInstallPrompt();
+        
+        // Don't show immediately on mobile, wait for user interaction
+        if (window.innerWidth <= 768) {
+            setTimeout(() => {
+                if (!installPromptShown) {
+                    showMobileInstallBanner();
+                }
+            }, 3000);
+        } else {
+            showInstallPrompt();
+        }
     });
 
     // Handle successful PWA installation
@@ -527,12 +538,15 @@ function initializePWA() {
         console.log('📱 PWA was installed successfully');
         showNotification('CodeCatalyst AI app installed successfully!', 'success');
         hideInstallPrompt();
+        hideMobileInstallBanner();
     });
 
     // Detect if app is running in standalone mode
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
         console.log('📱 Running in PWA mode');
         document.body.classList.add('pwa-mode');
+        // Hide browser UI elements when in standalone mode
+        addStandaloneStyles();
     }
 }
 
@@ -733,6 +747,195 @@ function hideInstallPrompt() {
             container.remove();
         }, 300);
     }
+}
+
+// Mobile-specific install functions
+function showMobileInstallBanner() {
+    if (installPromptShown) return;
+    installPromptShown = true;
+    
+    const banner = document.createElement('div');
+    banner.id = 'mobile-install-banner';
+    banner.innerHTML = `
+        <div class="mobile-install-content">
+            <div class="mobile-install-icon">📱</div>
+            <div class="mobile-install-text">
+                <strong>Install CodeCatalyst AI</strong>
+                <span>Add to your home screen for better experience</span>
+            </div>
+            <div class="mobile-install-actions">
+                <button id="mobile-install-btn" class="mobile-install-button">Install</button>
+                <button id="mobile-dismiss-btn" class="mobile-dismiss-button">×</button>
+            </div>
+        </div>
+    `;
+    
+    // Add styles
+    const style = document.createElement('style');
+    style.textContent = `
+        #mobile-install-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #a7a459, #8b8746);
+            color: white;
+            padding: 15px;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+            z-index: 10000;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        
+        .mobile-install-content {
+            display: flex;
+            align-items: center;
+            max-width: 400px;
+            margin: 0 auto;
+            gap: 12px;
+        }
+        
+        .mobile-install-icon {
+            font-size: 24px;
+        }
+        
+        .mobile-install-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .mobile-install-text strong {
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+        
+        .mobile-install-text span {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        .mobile-install-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .mobile-install-button {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .mobile-dismiss-button {
+            background: none;
+            color: white;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    `;
+    
+    document.head.appendChild(style);
+    document.body.appendChild(banner);
+    
+    // Handle install button
+    document.getElementById('mobile-install-btn').onclick = () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted mobile install');
+                }
+                deferredPrompt = null;
+                hideMobileInstallBanner();
+            });
+        } else {
+            // Show manual instructions
+            showMobileInstructions();
+        }
+    };
+    
+    // Handle dismiss button
+    document.getElementById('mobile-dismiss-btn').onclick = () => {
+        hideMobileInstallBanner();
+        localStorage.setItem('mobile-install-dismissed', Date.now());
+    };
+    
+    // Auto-hide after 15 seconds
+    setTimeout(() => {
+        hideMobileInstallBanner();
+    }, 15000);
+}
+
+function hideMobileInstallBanner() {
+    const banner = document.getElementById('mobile-install-banner');
+    if (banner) {
+        banner.style.animation = 'slideDown 0.3s ease-in forwards';
+        setTimeout(() => banner.remove(), 300);
+    }
+}
+
+function showMobileInstructions() {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isAndroid = /Android/.test(navigator.userAgent);
+    
+    let instructions = '';
+    if (isIOS) {
+        instructions = `
+            <h3>📱 Install on iPhone/iPad:</h3>
+            <ol>
+                <li>Tap the <strong>Share button</strong> (⬆️) at the bottom</li>
+                <li>Scroll down and tap <strong>"Add to Home Screen"</strong></li>
+                <li>Tap <strong>"Add"</strong> to install</li>
+            </ol>
+        `;
+    } else if (isAndroid) {
+        instructions = `
+            <h3>🤖 Install on Android:</h3>
+            <ol>
+                <li>Tap the <strong>menu (⋮)</strong> in your browser</li>
+                <li>Look for <strong>"Add to Home screen"</strong> or <strong>"Install app"</strong></li>
+                <li>Tap <strong>"Install"</strong> or <strong>"Add"</strong></li>
+            </ol>
+        `;
+    } else {
+        instructions = `
+            <h3>💻 Install Instructions:</h3>
+            <p>Look for the install button in your browser's address bar or menu.</p>
+        `;
+    }
+    
+    showNotification(instructions, 'info', 8000);
+}
+
+function addStandaloneStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+        .pwa-mode {
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        
+        .pwa-mode .navbar {
+            padding-top: calc(1rem + env(safe-area-inset-top));
+        }
+    `;
+    document.head.appendChild(style);
 }
 
 function showUpdateAvailable() {

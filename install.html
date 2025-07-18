@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Install CodeCatalyst AI - Mobile App</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#a7a459">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 3rem;
+            margin: 20px 0;
+        }
+        
+        h1 {
+            color: #a7a459;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        
+        .subtitle {
+            opacity: 0.8;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .install-steps {
+            background: rgba(167, 164, 89, 0.1);
+            border: 1px solid #a7a459;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .device-section {
+            margin: 20px 0;
+        }
+        
+        .device-title {
+            color: #a7a459;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+        
+        .steps li {
+            counter-increment: step-counter;
+            margin: 12px 0;
+            padding-left: 40px;
+            position: relative;
+            line-height: 1.5;
+        }
+        
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #a7a459;
+            color: #1a1a1a;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .install-btn {
+            background: linear-gradient(135deg, #a7a459, #8b8746);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .install-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(167, 164, 89, 0.4);
+        }
+        
+        .install-btn.secondary {
+            background: transparent;
+            border: 2px solid #a7a459;
+        }
+        
+        .benefits {
+            margin: 30px 0;
+            display: grid;
+            gap: 15px;
+        }
+        
+        .benefit {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .benefit-icon {
+            font-size: 1.5rem;
+        }
+        
+        .browser-detect {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(167, 164, 89, 0.2);
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🤖</div>
+        <h1>Install CodeCatalyst AI</h1>
+        <p class="subtitle">Get the full app experience on your device</p>
+        
+        <div class="benefits">
+            <div class="benefit">
+                <span class="benefit-icon">⚡</span>
+                <span>Faster loading and offline access</span>
+            </div>
+            <div class="benefit">
+                <span class="benefit-icon">📱</span>
+                <span>Native app-like experience</span>
+            </div>
+            <div class="benefit">
+                <span class="benefit-icon">🔔</span>
+                <span>Push notifications support</span>
+            </div>
+            <div class="benefit">
+                <span class="benefit-icon">🏠</span>
+                <span>Add to home screen</span>
+            </div>
+        </div>
+        
+        <div class="browser-detect" id="browserInfo">
+            <span id="browserText">Detecting your browser...</span>
+        </div>
+        
+        <div class="install-steps">
+            <div class="device-section" id="androidSteps" style="display: none;">
+                <div class="device-title">
+                    <span>🤖</span>
+                    <span>For Android Devices</span>
+                </div>
+                <ol class="steps">
+                    <li>Look for the <strong>"Install App"</strong> notification at the top</li>
+                    <li>Or tap the <strong>menu (⋮)</strong> in your browser</li>
+                    <li>Select <strong>"Add to Home screen"</strong> or <strong>"Install app"</strong></li>
+                    <li>Tap <strong>"Install"</strong> to confirm</li>
+                    <li>Find the app icon on your home screen</li>
+                </ol>
+            </div>
+            
+            <div class="device-section" id="iosSteps" style="display: none;">
+                <div class="device-title">
+                    <span>📱</span>
+                    <span>For iPhone/iPad</span>
+                </div>
+                <ol class="steps">
+                    <li>Open this page in <strong>Safari browser</strong></li>
+                    <li>Tap the <strong>Share button</strong> (⬆️) at the bottom</li>
+                    <li>Scroll down and find <strong>"Add to Home Screen"</strong></li>
+                    <li>Tap <strong>"Add to Home Screen"</strong></li>
+                    <li>Tap <strong>"Add"</strong> to confirm installation</li>
+                </ol>
+            </div>
+            
+            <div class="device-section" id="desktopSteps" style="display: none;">
+                <div class="device-title">
+                    <span>💻</span>
+                    <span>For Desktop/Laptop</span>
+                </div>
+                <ol class="steps">
+                    <li>Look for the <strong>install icon (⊕)</strong> in the address bar</li>
+                    <li>Or click the browser <strong>menu (⋮)</strong></li>
+                    <li>Select <strong>"Install CodeCatalyst AI"</strong></li>
+                    <li>Click <strong>"Install"</strong> to confirm</li>
+                    <li>The app will open in its own window</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div>
+            <button class="install-btn" onclick="tryInstall()" id="installButton">
+                Try Automatic Install
+            </button>
+            <a href="index.html" class="install-btn secondary">
+                Open Main App
+            </a>
+        </div>
+        
+        <div style="margin-top: 30px; opacity: 0.7; font-size: 0.9rem;">
+            <p>Having trouble? Try refreshing the page or clearing your browser cache.</p>
+        </div>
+    </div>
+
+    <script>
+        let deferredPrompt;
+        
+        // Detect device and browser
+        function detectDevice() {
+            const userAgent = navigator.userAgent;
+            const isIOS = /iPad|iPhone|iPod/.test(userAgent);
+            const isAndroid = /Android/.test(userAgent);
+            const isMobile = /Mobile|Android|iPhone|iPad/.test(userAgent);
+            
+            let browserName = 'Unknown';
+            if (userAgent.includes('Chrome')) browserName = 'Chrome';
+            else if (userAgent.includes('Firefox')) browserName = 'Firefox';
+            else if (userAgent.includes('Safari')) browserName = 'Safari';
+            else if (userAgent.includes('Edge')) browserName = 'Edge';
+            
+            document.getElementById('browserText').textContent = 
+                `Detected: ${browserName} on ${isIOS ? 'iOS' : isAndroid ? 'Android' : 'Desktop'}`;
+            
+            // Show relevant steps
+            if (isIOS) {
+                document.getElementById('iosSteps').style.display = 'block';
+            } else if (isAndroid) {
+                document.getElementById('androidSteps').style.display = 'block';
+            } else {
+                document.getElementById('desktopSteps').style.display = 'block';
+            }
+            
+            return { isIOS, isAndroid, isMobile, browserName };
+        }
+        
+        // Listen for install prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            const installBtn = document.getElementById('installButton');
+            installBtn.style.background = 'linear-gradient(135deg, #10B981, #059669)';
+            installBtn.textContent = '🚀 Install Now';
+        });
+        
+        // Try automatic install
+        function tryInstall() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                        document.getElementById('installButton').textContent = '✅ Installing...';
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                alert('Please follow the manual installation steps above for your device.');
+            }
+        }
+        
+        // Check if already installed
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('App was installed');
+            document.getElementById('installButton').textContent = '✅ Installed!';
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        });
+        
+        // Initialize
+        window.addEventListener('load', () => {
+            detectDevice();
+            
+            // Register service worker
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => console.log('SW registered'))
+                    .catch(error => console.log('SW registration failed'));
+            }
+        });
+    </script>
+</body>
+</html>

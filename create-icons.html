@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create PWA Icons</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #1a1a1a; color: white; }
+        canvas { border: 2px solid #a7a459; margin: 10px; display: block; }
+        button { background: #a7a459; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin: 10px; cursor: pointer; }
+        button:hover { background: #8b8746; }
+        .container { text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 PWA Icon Generator</h1>
+        <p>Creating PNG icons for your CodeCatalyst AI app...</p>
+        
+        <canvas id="canvas192" width="192" height="192"></canvas>
+        <canvas id="canvas512" width="512" height="512"></canvas>
+        
+        <div>
+            <button onclick="generateIcons()">Generate Icons</button>
+            <button onclick="downloadIcon(192)">Download 192×192</button>
+            <button onclick="downloadIcon(512)">Download 512×512</button>
+            <button onclick="copyBase64()">Copy Base64 Data</button>
+        </div>
+        
+        <div id="base64Output" style="margin-top: 20px; font-size: 12px; word-break: break-all;"></div>
+    </div>
+
+    <script>
+        let icons = {};
+        
+        function generateIcons() {
+            createIcon(192);
+            createIcon(512);
+            console.log('Icons generated successfully!');
+        }
+        
+        function createIcon(size) {
+            const canvas = document.getElementById('canvas' + size);
+            const ctx = canvas.getContext('2d');
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            // Background
+            ctx.fillStyle = '#1a1a1a';
+            ctx.fillRect(0, 0, size, size);
+            
+            // Scale factor
+            const scale = size / 192;
+            ctx.scale(scale, scale);
+            
+            // Robot design
+            const centerX = 96;
+            const centerY = 96;
+            
+            // Gradient
+            const gradient = ctx.createLinearGradient(0, 0, 192, 192);
+            gradient.addColorStop(0, '#a7a459');
+            gradient.addColorStop(0.5, '#8b8746');
+            gradient.addColorStop(1, '#6f6d37');
+            
+            // Robot head (larger for better visibility)
+            ctx.fillStyle = gradient;
+            ctx.fillRect(centerX - 35, centerY - 35, 70, 50);
+            
+            // Eyes
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(centerX - 15, centerY - 15, 8, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(centerX + 15, centerY - 15, 8, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Eye pupils
+            ctx.fillStyle = '#000000';
+            ctx.beginPath();
+            ctx.arc(centerX - 15, centerY - 15, 4, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(centerX + 15, centerY - 15, 4, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Mouth
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(centerX - 15, centerY + 5, 30, 4);
+            
+            // Antenna
+            ctx.strokeStyle = '#a7a459';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY - 35);
+            ctx.lineTo(centerX, centerY - 50);
+            ctx.stroke();
+            
+            ctx.fillStyle = '#a7a459';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY - 50, 6, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Body
+            ctx.fillStyle = gradient;
+            ctx.fillRect(centerX - 25, centerY + 15, 50, 40);
+            
+            // Arms
+            ctx.fillRect(centerX - 50, centerY + 25, 20, 12);
+            ctx.fillRect(centerX + 30, centerY + 25, 20, 12);
+            
+            // Legs
+            ctx.fillRect(centerX - 15, centerY + 55, 12, 25);
+            ctx.fillRect(centerX + 3, centerY + 55, 12, 25);
+            
+            // Reset scale
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            
+            // Store the data URL
+            icons[size] = canvas.toDataURL('image/png');
+        }
+        
+        function downloadIcon(size) {
+            if (!icons[size]) {
+                alert('Please generate icons first!');
+                return;
+            }
+            
+            const link = document.createElement('a');
+            link.download = `icon-${size}.png`;
+            link.href = icons[size];
+            link.click();
+        }
+        
+        function copyBase64() {
+            if (!icons[192] || !icons[512]) {
+                alert('Please generate icons first!');
+                return;
+            }
+            
+            const output = `
+// Base64 encoded icons for PWA
+const PWA_ICONS = {
+    icon192: "${icons[192]}",
+    icon512: "${icons[512]}"
+};
+            `;
+            
+            navigator.clipboard.writeText(output).then(() => {
+                alert('Base64 data copied to clipboard!');
+                document.getElementById('base64Output').textContent = output;
+            });
+        }
+        
+        // Auto-generate on load
+        window.addEventListener('load', () => {
+            setTimeout(generateIcons, 500);
+        });
+    </script>
+</body>
+</html>

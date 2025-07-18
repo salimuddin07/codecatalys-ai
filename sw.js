@@ -1,6 +1,6 @@
-const CACHE_NAME = 'codecatalyst-ai-v1.0.0';
-const STATIC_CACHE = 'codecatalyst-static-v1.0.0';
-const DYNAMIC_CACHE = 'codecatalyst-dynamic-v1.0.0';
+const CACHE_NAME = 'codecatalyst-ai-v1.1.0';
+const STATIC_CACHE = 'codecatalyst-static-v1.1.0';
+const DYNAMIC_CACHE = 'codecatalyst-dynamic-v1.1.0';
 
 // Define what to cache
 const STATIC_ASSETS = [
@@ -13,6 +13,8 @@ const STATIC_ASSETS = [
   '/images/robot.svg',
   '/images/profile-photo.jpg',
   '/images/animated-logo.svg',
+  '/images/icon-192.png',
+  '/images/icon-512.png',
   '/manifest.json'
 ];
 
