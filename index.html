@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>CodeCatalyst AI | Premium AI Automation Solutions</title>
     <meta name="description" content="CodeCatalyst AI - Premium AI Automation Web Developer specializing in intelligent workflows, chatbot integrations, and automated solutions.">
     
@@ -20,7 +23,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/robot.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/robot.svg">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/robot.svg">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=2025.01.20">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -28,29 +31,68 @@
     <script src="js/email-service.js"></script>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="#home" class="nav-logo-link">
-                    <img src="assets/icons/profile-photo.jpg" alt="CodeCatalyst AI - Premium AI Solutions" class="logo-img">
-                    <span class="logo-text">CodeCatalyst AI</span>
-                </a>
+    <!-- Professional Navigation Header -->
+    <header class="main-header">
+        <nav class="navigation">
+            <div class="nav-wrapper">
+                <!-- Brand Logo Section -->
+                <div class="brand-section">
+                    <a href="#home" class="brand-link">
+                        <div class="logo-container">
+                            <img src="assets/icons/profile-photo.jpg" alt="CodeCatalyst AI" class="brand-logo">
+                            <div class="brand-info">
+                                <h1 class="brand-name">CodeCatalyst AI</h1>
+                                <span class="brand-tagline">AI Automation Expert</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Main Navigation Menu -->
+                <div class="nav-main-menu" id="mainMenu">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#home" class="nav-anchor active">
+                                <i class="fas fa-home nav-icon"></i>
+                                <span class="nav-text">Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#services" class="nav-anchor">
+                                <i class="fas fa-cogs nav-icon"></i>
+                                <span class="nav-text">Services</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#about" class="nav-anchor">
+                                <i class="fas fa-user nav-icon"></i>
+                                <span class="nav-text">About</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#contact" class="nav-anchor">
+                                <i class="fas fa-envelope nav-icon"></i>
+                                <span class="nav-text">Contact</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="nav-actions">
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <i class="fas fa-moon theme-icon"></i>
+                        <span class="theme-label">Dark</span>
+                    </button>
+                    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </button>
+                </div>
             </div>
-            <div class="nav-menu" id="nav-menu">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#services" class="nav-link">Services</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#contact" class="nav-link">Contact</a>
-                <span class="dark-mode-text" id="dark-mode-toggle">Dark Mode</span>
-            </div>
-            <div class="nav-toggle" id="nav-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
@@ -326,7 +368,7 @@
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=2025.01.20"></script>
     
     <!-- WhatsApp Float Button -->
     <div class="whatsapp-float">
