@@ -465,6 +465,8 @@ select {
     gap: 0.25rem;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    position: relative;
+    z-index: 10000;
 }
 
 .menu-toggle:hover {
@@ -480,6 +482,7 @@ select {
     background: var(--text-dark);
     border-radius: 2px;
     transition: all 0.3s ease;
+    display: block;
 }
 
 .menu-toggle:hover .hamburger-line {
@@ -1339,94 +1342,136 @@ select {
     
     /* Show mobile menu toggle */
     .menu-toggle {
-        display: flex;
+        display: flex !important;
+        position: relative;
+        z-index: 10000;
     }
     
-    /* Hide desktop navigation */
+    /* Hide desktop navigation and transform for mobile */
     .nav-main-menu {
-        position: fixed;
+        position: fixed !important;
         top: 70px;
         left: 0;
-        width: 100%;
+        width: 100% !important;
         height: calc(100vh - 70px);
-        background: rgba(255, 255, 255, 0.98);
+        background: rgba(255, 255, 255, 0.98) !important;
         backdrop-filter: blur(25px);
         -webkit-backdrop-filter: blur(25px);
         transform: translateX(-100%);
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 999;
+        z-index: 9998;
         overflow-y: auto;
         border-top: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        display: block !important;
     }
     
     .nav-main-menu.active {
-        transform: translateX(0);
+        transform: translateX(0) !important;
+        opacity: 1;
+        visibility: visible;
     }
     
     .nav-list {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-        background: transparent;
-        border-radius: 0;
-        padding: 2rem 1.5rem;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0 !important;
+        background: transparent !important;
+        border-radius: 0 !important;
+        padding: 2rem 1.5rem !important;
         height: auto;
         min-height: calc(100vh - 70px);
+        border: none !important;
+        box-shadow: none !important;
+        margin: 0;
+        width: 100%;
     }
     
     .nav-item {
-        width: 100%;
+        width: 100% !important;
+        margin: 0 !important;
     }
     
     .nav-anchor {
-        width: 100%;
-        padding: 1.2rem 1.5rem;
-        border-radius: 12px;
-        margin-bottom: 0.5rem;
-        font-size: 1rem;
-        background: rgba(248, 249, 250, 0.8);
-        border: 1px solid rgba(0, 0, 0, 0.05);
+        width: 100% !important;
+        padding: 1.2rem 1.5rem !important;
+        border-radius: 12px !important;
+        margin-bottom: 0.5rem !important;
+        font-size: 1rem !important;
+        background: rgba(248, 249, 250, 0.8) !important;
+        border: 1px solid rgba(0, 0, 0, 0.05) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        text-decoration: none !important;
+        color: var(--text-dark) !important;
     }
     
     .nav-anchor::before {
-        left: -100%;
+        left: -100% !important;
     }
     
     .nav-anchor:hover::before,
     .nav-anchor.active::before {
-        left: 0;
+        left: 0 !important;
     }
     
     .nav-icon {
-        font-size: 1.1rem;
+        font-size: 1.1rem !important;
+        margin-right: 0.5rem !important;
     }
     
     .nav-text {
-        font-size: 1rem;
-        font-weight: 600;
+        font-size: 1rem !important;
+        font-weight: 600 !important;
     }
     
     /* Theme toggle mobile */
     .theme-toggle {
-        padding: 0.6rem 1rem;
-        font-size: 0.8rem;
-        border-radius: 20px;
+        padding: 0.6rem 1rem !important;
+        font-size: 0.8rem !important;
+        border-radius: 20px !important;
     }
     
     .theme-label {
-        display: none;
+        display: none !important;
     }
     
     /* Dark mode mobile */
     [data-theme="dark"] .nav-main-menu {
-        background: rgba(26, 26, 26, 0.98);
-        border-top-color: rgba(255, 255, 255, 0.1);
+        background: rgba(26, 26, 26, 0.98) !important;
+        border-top-color: rgba(255, 255, 255, 0.1) !important;
     }
     
     [data-theme="dark"] .nav-anchor {
-        background: rgba(44, 44, 44, 0.8);
-        border-color: rgba(255, 255, 255, 0.1);
-        color: var(--text-dark);
+        background: rgba(44, 44, 44, 0.8) !important;
+        border-color: rgba(255, 255, 255, 0.1) !important;
+        color: var(--text-dark) !important;
+    }
+
+    /* Ensure hamburger menu is visible */
+    .hamburger-line {
+        display: block !important;
+        width: 24px;
+        height: 2.5px;
+        background: var(--text-dark);
+        border-radius: 2px;
+        transition: all 0.3s ease;
+        margin: 2px 0;
+    }
+
+    /* Active hamburger animation */
+    .menu-toggle.active .hamburger-line:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .menu-toggle.active .hamburger-line:nth-child(2) {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    .menu-toggle.active .hamburger-line:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
     }
 
     /* Hero section improvements */
@@ -1633,56 +1678,108 @@ select {
     }
 
     /* Navbar ultra-compact */
-    .navbar {
-        padding: 0.4rem 0;
+    .main-header {
+        height: 65px;
+        padding: 0;
     }
 
-    .nav-container {
+    .navigation {
         padding: 0 0.8rem;
     }
 
-    .nav-logo .logo-img {
-        width: 28px;
-        height: 28px;
+    .nav-wrapper {
+        gap: 0.5rem;
     }
 
-    .nav-logo .logo-text {
-        font-size: 0.9rem;
-        letter-spacing: 0.2px;
+    /* Brand section smaller */
+    .brand-logo {
+        width: 35px;
+        height: 35px;
+        border-radius: 6px;
     }
 
-    .nav-menu {
-        top: 55px;
-        padding: 1rem 0;
-        background: linear-gradient(135deg, rgba(167, 164, 89, 0.95), rgba(52, 152, 219, 0.95)) !important;
-        backdrop-filter: blur(15px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        -webkit-backdrop-filter: blur(15px);
+    .brand-name {
+        font-size: 1rem;
+        letter-spacing: -0.3px;
     }
 
-    .nav-link {
-        padding: 0.8rem 1rem;
-        font-size: 0.9rem;
-        color: #FFFFFF !important;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.3s ease;
+    .brand-tagline {
+        font-size: 0.6rem;
+        letter-spacing: 0.5px;
     }
-    
-    .nav-link:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: #FFFFFF !important;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+
+    /* Mobile menu adjustments */
+    .nav-main-menu {
+        top: 65px !important;
+        height: calc(100vh - 65px) !important;
     }
-    
-    .nav-link:last-child {
-        border-bottom: none;
+
+    .nav-list {
+        padding: 1.5rem 1rem !important;
+        min-height: calc(100vh - 65px);
+    }
+
+    .nav-anchor {
+        padding: 1rem 1.2rem !important;
+        font-size: 0.95rem !important;
+        margin-bottom: 0.4rem !important;
+        border-radius: 10px !important;
+    }
+
+    .nav-icon {
+        font-size: 1rem !important;
+        margin-right: 0.4rem !important;
+    }
+
+    .nav-text {
+        font-size: 0.95rem !important;
+    }
+
+    /* Menu toggle smaller */
+    .menu-toggle {
+        width: 45px !important;
+        height: 45px !important;
+        border-radius: 12px !important;
+    }
+
+    .hamburger-line {
+        width: 20px !important;
+        height: 2px !important;
+    }
+
+    .menu-toggle.active .hamburger-line:nth-child(1) {
+        transform: translateY(6px) rotate(45deg);
+    }
+
+    .menu-toggle.active .hamburger-line:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg);
+    }
+
+    /* Theme toggle smaller */
+    .theme-toggle {
+        width: 45px !important;
+        height: 45px !important;
+        padding: 0.5rem !important;
+        border-radius: 12px !important;
+    }
+
+    .theme-icon {
+        font-size: 0.9rem !important;
+    }
+
+    /* Dark mode adjustments */
+    [data-theme="dark"] .nav-main-menu {
+        background: rgba(20, 20, 20, 0.98) !important;
+    }
+
+    [data-theme="dark"] .nav-anchor {
+        background: rgba(40, 40, 40, 0.9) !important;
+        border-color: rgba(255, 255, 255, 0.08) !important;
     }
 
     /* Hero section ultra-mobile */
     .hero {
-        padding-top: 70px;
+        padding-top: 85px;
         min-height: 100vh;
         padding-left: 0.8rem;
         padding-right: 0.8rem;
@@ -1698,8 +1795,86 @@ select {
     }
 
     .hero-visual {
-        height: 240px;
-        margin-top: 0.5rem;
+        height: 260px;
+        border-radius: 15px;
+    }
+
+    .hero-gif {
+        width: 70px;
+        height: 70px;
+    }
+
+    .floating-animation {
+        top: 10px;
+        right: 5px;
+        position: relative;
+    }
+
+    /* Typography improvements */
+    .main-title {
+        font-size: 1.8rem;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .typing-container {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Ensure touch targets are large enough */
+    .nav-anchor,
+    .theme-toggle,
+    .menu-toggle {
+        min-height: 44px;
+        min-width: 44px;
+        touch-action: manipulation;
+    }
+
+    /* WhatsApp button mobile adjustment */
+    .whatsapp-float {
+        right: 15px;
+        bottom: 15px;
+    }
+
+    .whatsapp-btn {
+        width: 55px;
+        height: 55px;
+        font-size: 1.6rem;
+    }
+}
+
+/* Very Small Devices (360px and below) - For older Android phones */
+@media (max-width: 360px) {
+    .container {
+        padding: 0 0.6rem;
+    }
+
+    .hero {
+        padding-top: 65px;
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
+    }
+
+    .hero-container {
+        padding: 0 0.3rem;
+    }
+
+    .main-title {
+        font-size: 1.6rem;
+        line-height: 1.2;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+    }
+
+    .hero-visual {
+        height: 200px;
     }
 
     .main-title {
