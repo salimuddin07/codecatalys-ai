@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Mode Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        
+        .theme-toggle {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .theme-toggle:hover {
+            background: #0056b3;
+        }
+        
+        /* Light theme (default) */
+        body {
+            background-color: #ffffff;
+            color: #333333;
+        }
+        
+        /* Dark theme */
+        body.dark-theme {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+        
+        body.dark-theme .test-container {
+            border-color: #444;
+            background-color: #2d2d2d;
+        }
+        
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        
+        body.dark-theme .success { background-color: #2d5a2d; color: #90ee90; }
+        body.dark-theme .error { background-color: #5d2d2d; color: #ff6b6b; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🌙 Dark Mode Test</h1>
+        <p>This is a simple test to check if the dark mode toggle is working.</p>
+        
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <span id="themeText">Switch to Dark Mode</span>
+        </button>
+        
+        <div id="status" class="status">
+            <strong>Status:</strong> <span id="currentTheme">Light Mode Active</span>
+        </div>
+        
+        <div class="test-section">
+            <h2>Test Results:</h2>
+            <p id="testResult">Click the button above to test theme switching</p>
+        </div>
+        
+        <div class="instructions">
+            <h3>How to test your main website:</h3>
+            <ol>
+                <li>Open your main website at <a href="http://127.0.0.1:3002" target="_blank">http://127.0.0.1:3002</a></li>
+                <li>Look for the theme toggle button in the navigation (usually top-right)</li>
+                <li>Click the button to switch between light and dark modes</li>
+                <li>Check if the page colors change</li>
+                <li>Refresh the page to see if the theme is saved</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const themeText = document.getElementById('themeText');
+            const currentTheme = document.getElementById('currentTheme');
+            const testResult = document.getElementById('testResult');
+            
+            if (body.classList.contains('dark-theme')) {
+                // Switch to light mode
+                body.classList.remove('dark-theme');
+                themeText.textContent = 'Switch to Dark Mode';
+                currentTheme.textContent = 'Light Mode Active';
+                testResult.textContent = '✅ Successfully switched to Light Mode!';
+                testResult.className = 'success';
+                localStorage.setItem('theme', 'light');
+            } else {
+                // Switch to dark mode
+                body.classList.add('dark-theme');
+                themeText.textContent = 'Switch to Light Mode';
+                currentTheme.textContent = 'Dark Mode Active';
+                testResult.textContent = '✅ Successfully switched to Dark Mode!';
+                testResult.className = 'success';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        // Load saved theme on page load
+        window.addEventListener('load', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                toggleTheme();
+            }
+        });
+        
+        // Test the main website's theme toggle
+        function testMainWebsite() {
+            const iframe = document.createElement('iframe');
+            iframe.src = 'http://127.0.0.1:3002';
+            iframe.style.width = '100%';
+            iframe.style.height = '300px';
+            iframe.style.border = '1px solid #ccc';
+            iframe.style.marginTop = '20px';
+            
+            document.querySelector('.test-container').appendChild(iframe);
+        }
+    </script>
+</body>
+</html>

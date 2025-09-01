@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug: Dark Mode Issue</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .debug-section {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        
+        .error { border-left-color: #dc3545; background: #f8d7da; }
+        .success { border-left-color: #28a745; background: #d4edda; }
+        .warning { border-left-color: #ffc107; background: #fff3cd; }
+        
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        .test-button:hover {
+            background: #0056b3;
+        }
+        
+        .console-output {
+            background: #2d2d2d;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Dark Mode Debug Tool</h1>
+    
+    <div class="debug-section">
+        <h2>Quick Diagnosis</h2>
+        <p>This tool will help diagnose why the dark mode toggle isn't working on your website.</p>
+        
+        <button class="test-button" onclick="runDiagnostics()">🔍 Run Diagnostics</button>
+        <button class="test-button" onclick="testMainSite()">🌐 Test Main Website</button>
+        <button class="test-button" onclick="clearConsole()">🗑️ Clear Console</button>
+    </div>
+    
+    <div class="debug-section">
+        <h2>🖥️ Console Output</h2>
+        <div id="console" class="console-output">Ready to run diagnostics...\n</div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>🌐 Main Website Preview</h2>
+        <p>Your main website should appear below. Try clicking the theme toggle button.</p>
+        <iframe id="mainSite" src="http://127.0.0.1:3002"></iframe>
+    </div>
+    
+    <div class="debug-section">
+        <h2>📋 Common Issues & Solutions</h2>
+        <ul>
+            <li><strong>Button not found:</strong> Check if ID="themeToggle" exists in HTML</li>
+            <li><strong>JavaScript errors:</strong> Check browser console for errors</li>
+            <li><strong>CSS not loading:</strong> Verify CSS files are loading properly</li>
+            <li><strong>Missing classes:</strong> Ensure .theme-icon and .theme-label exist</li>
+        </ul>
+    </div>
+    
+    <script>
+        let consoleElement = document.getElementById('console');
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+            consoleElement.textContent += `[${timestamp}] ${prefix} ${message}\n`;
+            consoleElement.scrollTop = consoleElement.scrollHeight;
+        }
+        
+        function clearConsole() {
+            consoleElement.textContent = 'Console cleared...\n';
+        }
+        
+        function runDiagnostics() {
+            log('Starting diagnostics...');
+            
+            // Test 1: Check if main site is accessible
+            fetch('http://127.0.0.1:3002')
+                .then(response => {
+                    if (response.ok) {
+                        log('✓ Main website is accessible', 'success');
+                        return response.text();
+                    } else {
+                        throw new Error('Site not accessible');
+                    }
+                })
+                .then(html => {
+                    // Test 2: Check if theme toggle exists in HTML
+                    if (html.includes('id="themeToggle"')) {
+                        log('✓ Theme toggle button found in HTML', 'success');
+                    } else {
+                        log('✗ Theme toggle button NOT found in HTML', 'error');
+                    }
+                    
+                    // Test 3: Check for required CSS files
+                    if (html.includes('css/style.css')) {
+                        log('✓ Main CSS file linked', 'success');
+                    } else {
+                        log('✗ Main CSS file NOT linked', 'error');
+                    }
+                    
+                    // Test 4: Check for JavaScript files
+                    if (html.includes('js/script.js')) {
+                        log('✓ Main JavaScript file linked', 'success');
+                    } else {
+                        log('✗ Main JavaScript file NOT linked', 'error');
+                    }
+                    
+                    // Test 5: Check for theme classes
+                    if (html.includes('theme-icon') && html.includes('theme-label')) {
+                        log('✓ Theme toggle structure found', 'success');
+                    } else {
+                        log('✗ Theme toggle structure incomplete', 'error');
+                    }
+                })
+                .catch(error => {
+                    log('✗ Cannot access main website: ' + error.message, 'error');
+                    log('Make sure the server is running on port 3002', 'warning');
+                });
+        }
+        
+        function testMainSite() {
+            log('Opening main website for testing...');
+            const iframe = document.getElementById('mainSite');
+            iframe.src = 'http://127.0.0.1:3002?' + Date.now(); // Force reload
+        }
+        
+        // Auto-run diagnostics after 2 seconds
+        setTimeout(() => {
+            log('Auto-running diagnostics...');
+            runDiagnostics();
+        }, 2000);
+    </script>
+</body>
+</html>

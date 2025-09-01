@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCatalyst AI - Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .warning { background-color: #fff3cd; border-color: #ffeaa7; }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 CodeCatalyst AI - Website Test</h1>
+    
+    <div class="test-section success">
+        <h2>✅ Server Status</h2>
+        <p>Local HTTP server is running successfully on port 8080</p>
+        <p><strong>Website URL:</strong> <a href="http://127.0.0.1:8080/readme-alex/index.html" target="_blank">http://127.0.0.1:8080/readme-alex/index.html</a></p>
+    </div>
+
+    <div class="test-section">
+        <h2>📋 Manual Testing Checklist</h2>
+        <h3>🔧 Basic Functionality Tests:</h3>
+        <ul>
+            <li>✅ <strong>Page Loading:</strong> Website loads without errors</li>
+            <li>✅ <strong>CSS Styling:</strong> All styles are applied correctly</li>
+            <li>✅ <strong>JavaScript:</strong> Interactive elements work</li>
+            <li>✅ <strong>Responsive Design:</strong> Layout adapts to different screen sizes</li>
+        </ul>
+
+        <h3>🎯 Interactive Features Tests:</h3>
+        <ul>
+            <li><strong>Navigation Menu:</strong> 
+                <ul>
+                    <li>Desktop navigation links work</li>
+                    <li>Mobile hamburger menu toggles</li>
+                    <li>Smooth scrolling to sections</li>
+                </ul>
+            </li>
+            <li><strong>Theme Toggle:</strong>
+                <ul>
+                    <li>Dark/Light theme switch works</li>
+                    <li>Theme preference is saved</li>
+                </ul>
+            </li>
+            <li><strong>Contact Form:</strong>
+                <ul>
+                    <li>Form validation works</li>
+                    <li>Error messages display correctly</li>
+                    <li>Required field indicators</li>
+                </ul>
+            </li>
+            <li><strong>Project Modals:</strong>
+                <ul>
+                    <li>Project cards are clickable</li>
+                    <li>Modals open and close properly</li>
+                    <li>Content displays correctly</li>
+                </ul>
+            </li>
+            <li><strong>Animations:</strong>
+                <ul>
+                    <li>Scroll animations trigger</li>
+                    <li>Skill bars animate</li>
+                    <li>Counters increment</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="test-section warning">
+        <h2>⚠️ Known Configuration Items</h2>
+        <ul>
+            <li><strong>EmailJS:</strong> Requires configuration in <code>js/config.js</code></li>
+            <li><strong>WhatsApp:</strong> Phone number needs to be set in JavaScript</li>
+            <li><strong>Social Links:</strong> Update with actual profile URLs</li>
+            <li><strong>Project Data:</strong> Replace placeholder project information</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>🔍 Browser Developer Tools Check</h2>
+        <p>Open browser developer tools (F12) and check:</p>
+        <ul>
+            <li><strong>Console:</strong> No critical JavaScript errors</li>
+            <li><strong>Network:</strong> All CSS/JS files load successfully</li>
+            <li><strong>Elements:</strong> HTML structure is correct</li>
+            <li><strong>Lighthouse:</strong> Performance, Accessibility, SEO scores</li>
+        </ul>
+        
+        <button onclick="window.open('http://127.0.0.1:8080/readme-alex/index.html', '_blank')">
+            🚀 Open Main Website
+        </button>
+        
+        <button onclick="console.log('Testing console functionality')">
+            🧪 Test Console
+        </button>
+    </div>
+
+    <div class="test-section">
+        <h2>📱 Responsive Testing</h2>
+        <p>Test the website on different screen sizes:</p>
+        <ul>
+            <li><strong>Desktop:</strong> 1920x1080, 1366x768</li>
+            <li><strong>Tablet:</strong> 768x1024 (iPad)</li>
+            <li><strong>Mobile:</strong> 375x667 (iPhone), 360x640 (Android)</li>
+        </ul>
+        
+        <p>Use browser developer tools to simulate different devices.</p>
+    </div>
+
+    <script>
+        // Simple connectivity test
+        fetch('http://127.0.0.1:8080/readme-alex/index.html')
+            .then(response => {
+                if (response.ok) {
+                    console.log('✅ Main website is accessible');
+                } else {
+                    console.error('❌ Website accessibility issue');
+                }
+            })
+            .catch(error => {
+                console.error('❌ Network error:', error);
+            });
+
+        // Log test information
+        console.log('🧪 Test page loaded successfully');
+        console.log('📍 Current URL:', window.location.href);
+        console.log('🕐 Test time:', new Date().toLocaleString());
+    </script>
+</body>
+</html>

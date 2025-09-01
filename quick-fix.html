@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Dark Mode Fix</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .fix-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        
+        .fix-button:hover {
+            background: #0056b3;
+        }
+        
+        .success {
+            background: #28a745;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Quick Dark Mode Fix</h1>
+    
+    <p><strong>Your dark mode isn't working because of a JavaScript error.</strong> Here's the quickest fix:</p>
+    
+    <h2>Method 1: Automatic Fix</h2>
+    <button class="fix-button" onclick="fixDarkMode()">🚀 Fix Dark Mode Now</button>
+    <button class="fix-button" onclick="testToggle()">🌙 Test Toggle</button>
+    
+    <div id="status"></div>
+    
+    <h2>Method 2: Manual Browser Console Fix</h2>
+    <p>If the automatic fix doesn't work, copy and paste this code into your browser console (F12):</p>
+    
+    <div class="code-block">// Quick Dark Mode Fix
+const btn = document.getElementById('themeToggle');
+if (btn) {
+    btn.onclick = function() {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        const icon = btn.querySelector('.theme-icon');
+        const label = btn.querySelector('.theme-label');
+        if (icon) icon.className = newTheme === 'dark' ? 'fas fa-sun theme-icon' : 'fas fa-moon theme-icon';
+        if (label) label.textContent = newTheme === 'dark' ? 'Light' : 'Dark';
+        
+        console.log('Theme switched to:', newTheme);
+    };
+    console.log('✅ Dark mode fixed!');
+} else {
+    console.log('❌ Button not found');
+}</div>
+
+    <h2>Method 3: Direct Theme Switch</h2>
+    <p>Toggle between themes instantly:</p>
+    <button class="fix-button" onclick="setDark()">🌙 Force Dark Mode</button>
+    <button class="fix-button" onclick="setLight()">☀️ Force Light Mode</button>
+    
+    <script>
+        function fixDarkMode() {
+            // Open the main website and fix the dark mode
+            const mainWindow = window.open('http://127.0.0.1:3002', '_blank');
+            
+            setTimeout(() => {
+                try {
+                    const btn = mainWindow.document.getElementById('themeToggle');
+                    if (btn) {
+                        btn.onclick = function() {
+                            const current = mainWindow.document.documentElement.getAttribute('data-theme') || 'light';
+                            const newTheme = current === 'dark' ? 'light' : 'dark';
+                            mainWindow.document.documentElement.setAttribute('data-theme', newTheme);
+                            mainWindow.localStorage.setItem('theme', newTheme);
+                            
+                            const icon = btn.querySelector('.theme-icon');
+                            const label = btn.querySelector('.theme-label');
+                            if (icon) icon.className = newTheme === 'dark' ? 'fas fa-sun theme-icon' : 'fas fa-moon theme-icon';
+                            if (label) label.textContent = newTheme === 'dark' ? 'Light' : 'Dark';
+                            
+                            console.log('Theme switched to:', newTheme);
+                        };
+                        
+                        document.getElementById('status').innerHTML = '<div class="success">✅ Dark mode has been fixed! Try clicking the theme toggle button on your website.</div>';
+                    } else {
+                        document.getElementById('status').innerHTML = '<div class="error">❌ Could not find theme toggle button.</div>';
+                    }
+                } catch (e) {
+                    document.getElementById('status').innerHTML = '<div class="error">❌ Could not access the website. Make sure it\'s open.</div>';
+                }
+            }, 2000);
+        }
+        
+        function testToggle() {
+            window.open('http://127.0.0.1:3002', '_blank');
+        }
+        
+        function setDark() {
+            const mainWindow = window.open('http://127.0.0.1:3002', '_blank');
+            setTimeout(() => {
+                try {
+                    mainWindow.document.documentElement.setAttribute('data-theme', 'dark');
+                    mainWindow.localStorage.setItem('theme', 'dark');
+                    document.getElementById('status').innerHTML = '<div class="success">🌙 Dark mode activated!</div>';
+                } catch (e) {
+                    console.error(e);
+                }
+            }, 1000);
+        }
+        
+        function setLight() {
+            const mainWindow = window.open('http://127.0.0.1:3002', '_blank');
+            setTimeout(() => {
+                try {
+                    mainWindow.document.documentElement.setAttribute('data-theme', 'light');
+                    mainWindow.localStorage.setItem('theme', 'light');
+                    document.getElementById('status').innerHTML = '<div class="success">☀️ Light mode activated!</div>';
+                } catch (e) {
+                    console.error(e);
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

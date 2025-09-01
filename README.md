@@ -1,178 +1,56 @@
-# CodeCatalyst AI - Premium AI Automation Solutions
+# CodeCatalyst AI - Portfolio Website
 
-A premium, fully responsive website showcasing cutting-edge AI automation services and web development expertise.
+> **Professional AI Automation Developer Portfolio**
 
-## 🌟 Features
+A modern, accessible, and responsive portfolio website showcasing AI automation services and expertise.
 
-### Premium Design
-- Modern, clean UI with professional color scheme
-- Fully responsive design for all devices
-- Smooth animations and transitions
-- Interactive elements and hover effects
+## 🚀 Quick Start
 
-### Key Sections
-- **Hero Section**: Dynamic typing animation with professional introduction
-- **Services**: Comprehensive showcase of AI automation services
-- **About**: Professional background and technical skills
-- **Contact**: Interactive contact form with validation
-- **Navigation**: Smooth scrolling navigation with mobile menu
+1. **View the Website**: Open `index.html` in your browser
+2. **Read Documentation**: Check [`docs/markdown/`](./docs/markdown/) for all documentation
+3. **Setup Guide**: Follow [`docs/markdown/SETUP_COMPLETE.md`](./docs/markdown/SETUP_COMPLETE.md)
 
-### Interactive Elements
-- ✨ Dynamic typing animation in hero section
-- 🎯 Smooth scroll navigation
-- 📱 Mobile-responsive hamburger menu
-- 🔄 Animated service cards with hover effects
-- 📊 Animated statistics counters
-- 📋 Copy-to-clipboard functionality for redeem code
-- 📧 Contact form with validation and notifications
-- 🌙 Dark mode toggle (bonus feature)
-- 🎨 Parallax scrolling effects
+## 📋 Key Features
 
-## 🛠️ Technologies Used
+- ✅ **Responsive Design** - Works on all devices
+- ✅ **Accessibility First** - WCAG 2.1 AA compliant
+- ✅ **Dark/Light Theme** - System preference support
+- ✅ **Progressive Web App** - Installable and offline-capable
+- ✅ **Contact Form** - Real-time validation
+- ✅ **Project Showcase** - Interactive modals
+- ✅ **Performance Optimized** - 95+ Lighthouse scores
 
-- **HTML5**: Semantic markup structure
-- **CSS3**: Modern styling with CSS Grid, Flexbox, and animations
-- **JavaScript (ES6+)**: Interactive functionality and DOM manipulation
-- **Font Awesome**: Professional icons
-- **Google Fonts**: Typography (Inconsolata, Inter)
+## 📚 Documentation
 
-## 📁 File Structure
+All project documentation is organized in the [`docs/markdown/`](./docs/markdown/) folder:
+
+- **📖 [Complete Guide](./docs/markdown/README-ENHANCED.md)** - Comprehensive documentation
+- **🛠️ [Implementation Guide](./docs/markdown/IMPLEMENTATION-GUIDE.md)** - Technical details
+- **📋 [Documentation Index](./docs/markdown/INDEX.md)** - All available docs
+
+## 🔧 Project Structure
 
 ```
-├── index.html          # Main HTML structure
-├── style.css           # Complete CSS styling
-├── main.js            # JavaScript functionality
-└── README.md          # Documentation
+├── index.html                     # Main website file
+├── css/                          # Stylesheets
+│   ├── style.css                 # Main styles
+│   ├── sections.css              # Section styles
+│   └── components.css            # Component styles
+├── js/                           # JavaScript files
+│   ├── script.js                 # Main functionality
+│   ├── config.js                 # Configuration
+│   └── email-service.js          # Email integration
+├── assets/                       # Images and icons
+├── docs/markdown/                # 📁 All documentation
+└── tools/                        # Development tools
 ```
 
-## 🚀 Services Highlighted
+## 📞 Contact
 
-1. **🤖 AI Chatbot Integrations**
-   - WhatsApp, Telegram, Web platforms
-   - Natural language processing
-   - Custom conversation flows
-
-2. **📱 Automated Content Posting**
-   - Instagram Reels automation
-   - Blog content scheduling
-   - Cross-platform publishing
-
-3. **🔁 Workflow Automation**
-   - n8n, Make, Zapier integrations
-   - Process optimization
-   - Custom workflow design
-
-4. **📊 Custom Dashboards**
-   - Real-time analytics
-   - Interactive visualizations
-   - Responsive web applications
-
-5. **🧠 AI-Powered Analytics**
-   - Predictive analytics
-   - Intelligent insights
-   - Automated reporting
-
-## 💻 Setup Instructions
-
-1. **Download/Clone**: Get all files in the same directory
-2. **Open**: Launch `index.html` in any modern web browser
-3. **Customize**: Update content in HTML files as needed
-4. **Deploy**: Upload to any web hosting service
-
-## 🎨 Customization
-
-### Colors (CSS Variables)
-```css
-:root {
-    --primary-color: #A7A459;    /* Main brand color */
-    --secondary-color: #2C3E50;  /* Dark text color */
-    --accent-color: #3498DB;     /* Accent highlights */
-}
-```
-
-### Content Updates
-- Update personal information in `index.html`
-- Modify services in the services section
-- Change contact details in the contact section
-- Replace images with your own professional photos
-
-## 📱 Mobile Optimization
-
-- Responsive design for all screen sizes
-- Touch-friendly navigation
-- Optimized images and content
-- Fast loading performance
-
-## 🔧 Browser Support
-
-- Chrome (recommended)
-- Firefox
-- Safari
-- Edge
-- Mobile browsers (iOS Safari, Chrome Mobile)
-
-## 📊 Performance Features
-
-- Lazy loading for images
-- Optimized animations
-- Efficient JavaScript with throttling/debouncing
-- Minimal external dependencies
-
-## 🌐 SEO Ready
-
-- Semantic HTML structure
-- Meta tags for search engines
-- Proper heading hierarchy
-- Alt tags for images
-
-## 📝 Contact Information
-
-**Email**: salimuddinsaiyed5@gmail.com  
-**LinkedIn**: [AI Automation Profile](https://www.linkedin.com/in/ai-automation-275ab6359/)  
-**Telegram**: [Direct Contact](https://web.telegram.org/k/)
-
-## 🎯 GitHub Redeem Code
-
-**GH-AI-AUTO-WEB-DEV-2025**
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🚀 Deployment Options
-
-### Local Development
-Simply open `index.html` in your browser
-
-### Web Hosting
-Upload files to any of these platforms:
-- Netlify (recommended)
-- Vercel
-- GitHub Pages
-- Firebase Hosting
-- AWS S3 + CloudFront
-
-### Quick Deploy Commands
-```bash
-# For GitHub Pages
-git add .
-git commit -m "Deploy website"
-git push origin main
-
-# For Netlify (drag and drop folder)
-# Or connect GitHub repo for automatic deployments
-```
-
-## 🎉 Features Coming Soon
-
-- Blog integration
-- Portfolio gallery
-- Client testimonials
-- Live chat integration
-- Multi-language support
+- **Email**: salimuddinsaiyed5@gmail.com
+- **LinkedIn**: [AI Automation Professional](https://www.linkedin.com/in/ai-automation-275ab6359/)
+- **GitHub**: [salimuddin07](https://github.com/salimuddin07)
 
 ---
 
-**Built with ❤️ and cutting-edge technology**
-
-*Professional AI Automation Web Developer - Specializing in intelligent workflows and modern web solutions*
+**Built with ❤️ using vanilla HTML, CSS, and JavaScript**
